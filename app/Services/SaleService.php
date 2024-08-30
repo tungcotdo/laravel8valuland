@@ -8,7 +8,6 @@ use DB;
 class SaleService
 {
     public function add( $request ){
-        //Required fields to select list
         $required_flag = array_filter([
             'code' => $request->code,
             'owner_name' => $request->owner_name,
@@ -53,8 +52,6 @@ class SaleService
     }
 
     public function update($request){
-        
-        //Required fields to select list
         $required_flag = array_filter([
             'code' => $request->code,
             'owner_name' => $request->owner_name,

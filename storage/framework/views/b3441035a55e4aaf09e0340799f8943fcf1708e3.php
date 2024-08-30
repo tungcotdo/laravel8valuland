@@ -33,13 +33,16 @@
     <header class="web-header py-3">
         <div class="container">
             <div class="row flex-nowrap justify-content-between align-items-center">
-                <div class="col-6 pt-1">
-                <a class="text-muted" href="#">
-                    <img width="150" src="<?php echo e(asset('web/img/valuland-Logo.png')); ?>" alt="">
-                </a>
+                <div class="col-6 pt-1 main-navigation">
+                    <a class="text-muted" href="#">
+                        <img width="130" src="<?php echo e(asset('web/img/valuland-Logo.png')); ?>" alt="">
+                    </a>
+                    <a class="main-navigation-item main-navigation-item--active" href="#">Nhà đất bán</a>
+                    <a class="main-navigation-item" href="#">Nhà đất cho thuê</a>
                 </div>
+                
                 <div class="col-6 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(route('web.sale.add')); ?>">Đăng tin</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(route('web.sale.add')); ?>">Đăng tin</a>
                 </div>
             </div>
         </div>

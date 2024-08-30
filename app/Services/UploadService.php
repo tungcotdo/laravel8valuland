@@ -39,7 +39,6 @@ class UploadService
             $files = $request->file($param['filename']);
 
             foreach( $files as $key => $file ){
-
                 $file_name = rand().'.'.$file->extension();
                     
                 $upload_path = $this->_UPLOAD_PATH. '/'. $param['uploadpath']  . '/';
@@ -53,7 +52,6 @@ class UploadService
                 if( !empty( $param['callback'] ) ){
                     $param['callback']($upload_path . $file_name);
                 }
-                
             }
 
             return true;

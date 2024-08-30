@@ -1364,3 +1364,23 @@ header{
 .search-group-btn:hover{
   opacity: 0.8;
 }
+
+.main-navigation{
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.main-navigation-item:hover{
+  text-decoration: underline;
+}
+
+.main-navigation-item{
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(98, 98, 98);
+}
+
+.main-navigation-item--active{
+  text-decoration: underline;
+}
