@@ -70,7 +70,7 @@ class OwnerController extends Controller
                 'sale_updated_at'  => Carbon::now()
             ]);
 
-            return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách bán thành công!');
+            return redirect()->back()->with('success', $this->_message['store']);
 
         }elseif( $request['owner_demand'] == 2 ){
             DB::table('rent')->insert([
@@ -85,10 +85,10 @@ class OwnerController extends Controller
                 'rent_updated_at'  => Carbon::now()
             ]);
 
-            return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách cho thuê thành công!');
+            return redirect()->back()->with('success', $this->_message['store']);
         }
 
-        return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách chủ nhà thành công!'); 
+        return redirect()->back()->with('success', $this->_message['store']); 
     }
     
     public function formUploadExcel(Request $request){
@@ -122,7 +122,7 @@ class OwnerController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Tải dữ liệu thành công!'); 
+        return redirect()->back()->with('success', $this->_message['store']); 
     }
     public function edit(Request $request){
         $this->_authorization(4);
@@ -156,7 +156,7 @@ class OwnerController extends Controller
                 'sale_updated_at'  => Carbon::now()
             ]);
 
-            return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách bán thành công!');
+            return redirect()->back()->with('success', $this->_message['update']);
 
         }elseif( $request['owner_demand'] == 2 ){
             DB::table('rent')->insert([
@@ -171,10 +171,10 @@ class OwnerController extends Controller
                 'rent_updated_at'  => Carbon::now()
             ]);
 
-            return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách cho thuê thành công!');
+            return redirect()->back()->with('success', $this->_message['store']);
         }
 
-        return redirect()->back()->with('success', 'Sửa thông tin chủ nhà thành công!'); 
+        return redirect()->back()->with('success', $this->_message['update']); 
     }
 
     public function updateDemand(Request $request){
@@ -205,7 +205,7 @@ class OwnerController extends Controller
                 'sale_created_at'  => Carbon::now(),
                 'sale_updated_at'  => Carbon::now()
             ]);
-            return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách bán thành công!');
+            return redirect()->back()->with('success', $this->_message['store']);
         }elseif( $request['owner_demand'] == 2 ){
             DB::table('rent')->insert([
                 'rent_status' => 1,
@@ -218,20 +218,20 @@ class OwnerController extends Controller
                 'rent_created_at'  => Carbon::now(),
                 'rent_updated_at'  => Carbon::now()
             ]);
-            return redirect()->back()->with('success', 'Thêm dữ liệu vào danh sách cho thuê thành công!');
+            return redirect()->back()->with('success', $this->_message['store']);
         }
     }
 
     public function delete(Request $request){
         $this->_authorization(5);
         DB::table('owner')->where('owner_id',$request->owner_id)->delete();
-        return redirect()->route('admin.owner.index')->with('success', 'Xoá dữ liệu thành công!'); 
+        return redirect()->route('admin.owner.index')->with('success', $this->_message['delete']); 
     }
 
     public function truncate(Request $request){
         $this->_authorization(5);
         DB::table('owner')->truncate();
-        return redirect()->back()->with('success', 'Xoá dữ liệu thành công!'); 
+        return redirect()->back()->with('success', $this->_message['delete']); 
     }
     
 }

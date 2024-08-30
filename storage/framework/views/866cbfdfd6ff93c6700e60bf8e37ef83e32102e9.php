@@ -151,8 +151,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-img-modal-close"></button>
           </div>
           <div class="modal-body">
-            <form action="<?php echo e(route('admin.saleimg.upload', $sale->sale_id)); ?>" id="admin-sale-uploadimg" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="sale-loadimg-url" value="<?php echo e(route('admin.saleimg.render', $sale->sale_id)); ?>">
+            <form action="<?php echo e(route('shared.saleimg.upload', $sale->sale_id)); ?>" id="admin-sale-uploadimg" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="sale-loadimg-url" value="<?php echo e(route('shared.saleimg.render', $sale->sale_id)); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-auto validate">
@@ -178,8 +178,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-video-modal-close"></button>
           </div>
           <div class="modal-body">
-            <form action="<?php echo e(route('admin.salevideo.upload', $sale->sale_id)); ?>" id="admin-salevideo-upload" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="admin-salevideo-upload-url" value="<?php echo e(route('admin.salevideo.render', $sale->sale_id)); ?>">
+            <form action="<?php echo e(route('shared.salevideo.upload', $sale->sale_id)); ?>" id="admin-salevideo-upload" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="admin-salevideo-upload-url" value="<?php echo e(route('shared.salevideo.render', $sale->sale_id)); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-auto validate">

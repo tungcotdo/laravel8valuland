@@ -5,8 +5,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.dashboard.index')}}">Trang chủ</a></li>
-          <li class="breadcrumb-item"><a href="{{route('shared.sale.raw')}}">Danh sách bán sơ</a></li>
-          <li class="breadcrumb-item"><a href="{{route('shared.sale.select')}}">Danh sách bán tinh</a></li>
+          <li class="breadcrumb-item"><a href="{{route('admin.sale.raw')}}">Danh sách bán sơ</a></li>
+          <li class="breadcrumb-item"><a href="{{route('admin.sale.select')}}">Danh sách bán tinh</a></li>
           <li class="breadcrumb-item active">Sửa dữ liệu bán</li>
         </ol>
       </nav>
@@ -20,7 +20,7 @@
           <div class="row">
 
             <!-- Start col-lg-12 -->
-            <form class="col-lg-12" action="{{route('shared.sale.update', $sale->sale_id)}}" method="POST" id="admin-sale-edit">
+            <form class="col-lg-12" action="{{route('admin.sale.update', $sale->sale_id)}}" method="POST" id="admin-sale-edit">
               @csrf  
               <input type="hidden" name="sale_status" value="{{$sale->sale_status}}">
               <div class="card">

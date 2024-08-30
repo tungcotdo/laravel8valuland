@@ -9,7 +9,7 @@ class UploadService
 
     private $_UPLOAD_PATH = 'upload';
 
-    public function uploadOneFile($param){
+    public function one($param){
         try{
             $file = $request->file($param['filename']);
 
@@ -23,6 +23,10 @@ class UploadService
                 File::delete($param['delpath']);
             }
 
+            if( !empty( $param['callback'] ) ){
+                $param['callback']($upload_path . $file_name);
+            }
+
             return true;
         }
         catch(Exception $e){
@@ -30,7 +34,7 @@ class UploadService
         }
     }
 
-    public function uploadManyFile($param){
+    public function many($param){
         try{
             $files = $request->file($param['filename']);
 
