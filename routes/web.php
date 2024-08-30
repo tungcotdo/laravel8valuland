@@ -16,6 +16,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('sale')->group(function () {
             Route::get('select', ['as' => 'web.sale.select', 'uses' => 'Web\SaleController@select']);
             Route::get('add', ['as' => 'web.sale.add', 'uses' => 'Web\SaleController@add']);
+            Route::post('store', ['as' => 'web.sale.store', 'uses' => 'Web\SaleController@store']);
+            Route::get('edit/{sale_id}/{sale_status}', ['as' => 'web.sale.edit', 'uses' => 'Web\SaleController@edit']);
+            Route::post('update/{sale_id}', ['as' => 'web.sale.update', 'uses' => 'Web\SaleController@update']);
             Route::get('detail/{sale_id}', ['as' => 'web.sale.detail', 'uses' => 'Web\SaleController@detail']);
         });
     });

@@ -77,6 +77,21 @@ class SaleController extends Controller
         return view('admin.sale.add');
     }
 
+    public function store(Request $request){
+        $this->_authorization(20);
+        $this->_sale->store($request);
+
+        if( $request->sale_status == 1 ){
+            return redirect()->route('admin.sale.raw')->with('success', $this->_message['update']);
+        }
+        
+        if( $request->sale_status == 2 ){
+            return redirect()->route('admin.sale.select')->with('success', $this->_message['update']);
+        }
+
+        return redirect()->back()->with('success', $this->_message['store']);
+    }
+
     public function edit(Request $request){
         $this->_authorization(20);
         $sale = DB::table('sale')->where('sale_id', $request->sale_id)->first();
