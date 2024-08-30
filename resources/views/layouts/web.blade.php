@@ -26,9 +26,7 @@
   <!-- Form CSS File -->
   <link href="{{asset('form/modal.css')}}" rel="stylesheet">
 
-  <style>
-    
-  </style>
+  @yield('web.style')
 </head>
 
 <body>
@@ -41,7 +39,7 @@
                 </a>
                 </div>
                 <div class="col-6 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="#">Đăng tin</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{{route('web.sale.add')}}">Đăng tin</a>
                 </div>
             </div>
         </div>
@@ -68,7 +66,7 @@
     <!-- Form JS File -->
     <script src="{{asset('form/function.js')}}"></script>
 
-    @yield('admin.script')
+    @yield('web.script')
 </body>
 
 </html>

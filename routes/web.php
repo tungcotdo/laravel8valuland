@@ -13,7 +13,11 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('web')->group(function () {
-        Route::get('index', ['as' => 'web.sale.index', 'uses' => 'Web\SaleController@index']);
+        Route::prefix('sale')->group(function () {
+            Route::get('select', ['as' => 'web.sale.select', 'uses' => 'Web\SaleController@select']);
+            Route::get('add', ['as' => 'web.sale.add', 'uses' => 'Web\SaleController@add']);
+            Route::get('detail/{sale_id}', ['as' => 'web.sale.detail', 'uses' => 'Web\SaleController@detail']);
+        });
     });
 
     Route::prefix('admin')->group(function () {

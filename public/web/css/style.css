@@ -1278,22 +1278,18 @@ h6 {
 
 .sale-grid--item1 {
   grid-area: salegriditem1;
-  background-color: red;
 }
 
 .sale-grid--item2 {
   grid-area: salegriditem2;
-  background-color: yellow;
 }
 
 .sale-grid--item3 {
   grid-area: salegriditem3;
-  background-color: green;
 }
 
 .sale-grid--item4 {
   grid-area: salegriditem4;
-  background-color: black;
 }
 
 .sale-card-grid{

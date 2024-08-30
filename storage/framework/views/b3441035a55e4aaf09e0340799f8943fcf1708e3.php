@@ -26,9 +26,7 @@
   <!-- Form CSS File -->
   <link href="<?php echo e(asset('form/modal.css')); ?>" rel="stylesheet">
 
-  <style>
-    
-  </style>
+  <?php echo $__env->yieldContent('web.style'); ?>
 </head>
 
 <body>
@@ -41,7 +39,7 @@
                 </a>
                 </div>
                 <div class="col-6 d-flex justify-content-end align-items-center">
-                <a class="btn btn-sm btn-outline-secondary" href="#">Đăng tin</a>
+                <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(route('web.sale.add')); ?>">Đăng tin</a>
                 </div>
             </div>
         </div>
@@ -68,7 +66,7 @@
     <!-- Form JS File -->
     <script src="<?php echo e(asset('form/function.js')); ?>"></script>
 
-    <?php echo $__env->yieldContent('admin.script'); ?>
+    <?php echo $__env->yieldContent('web.script'); ?>
 </body>
 
 </html><?php /**PATH C:\xampp\htdocs\laravel8valuland\resources\views/layouts/web.blade.php ENDPATH**/ ?>
