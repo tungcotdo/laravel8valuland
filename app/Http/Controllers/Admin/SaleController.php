@@ -10,8 +10,8 @@ use App\Imports\FileImport;
 use DB;
 use Carbon\Carbon;
 use Auth;
-use App\Services\House;
-use Validator,Response,File, Route;
+use App\Services\HouseService;
+use Validator,Response,File,Route;
 
 class SaleController extends Controller
 {
@@ -48,7 +48,7 @@ class SaleController extends Controller
         }
 
         $sale_selects = $query->get();
-        return view('admin.sale.select', ['sale_selects' => $sale_selects, 'house' => new House]);
+        return view('admin.sale.select', ['sale_selects' => $sale_selects, 'house' => new HouseService]);
     }
     
     public function sold(Request $request){
@@ -60,7 +60,7 @@ class SaleController extends Controller
         }
 
         $sale_solds = $query->get();
-        return view('admin.sale.sold', ['sale_solds' => $sale_solds, 'house' => new House]);
+        return view('admin.sale.sold', ['sale_solds' => $sale_solds, 'house' => new HouseService]);
     }
     
     public function add(Request $request){
@@ -70,7 +70,7 @@ class SaleController extends Controller
     public function edit(Request $request){
         $this->_authorization(20);
         $sale = DB::table('sale')->where('sale_id', $request->sale_id)->first();
-        return view('admin.sale.edit', ['sale' => $sale, 'house' => new House]);
+        return view('admin.sale.edit', ['sale' => $sale, 'house' => new HouseService]);
     }
 
     public function update(Request $request){

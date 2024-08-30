@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class House
+class HouseService
 {
     public $_SUBDIVISION = [
         '1' => 'Park 1',

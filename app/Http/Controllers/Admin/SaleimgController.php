@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Validator,Response,File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use App\Services\UploadService;
 
 class SaleimgController extends Controller
 {
@@ -22,35 +23,26 @@ class SaleimgController extends Controller
     }
 
     public function upload(Request $request){
-        try{
-            $files = $request->file('files');
 
-            foreach( $files as $key => $file ){
-
-                $file_name = rand().'.'.$file->extension();
-                
-                $upload_path = 'upload'. '/'. 'sale' . '/' . $request->sale_id  . '/';
-                
-                $file->move($upload_path, $file_name);
-                
-                DB::table('sale_img')->insert([
-                    'sale_id' => $request->sale_id,
-                    'sale_img_path' => $upload_path . $file_name,
-                    'sale_img_created_at'  => Carbon::now(),
-                    'sale_img_updated_at'  => Carbon::now()
-                ]);
-            }
-
+            $upload_service = new UploadService();
+            $uploadPaths = $upload_service->uploadManyFile(
+                $request->file('files'), 
+                'sale' . '/' . $request->sale_id  . '/',
+                function( $path ){
+                    DB::table('sale_img')->insert([
+                        'sale_id' => $request->sale_id,
+                        'sale_img_path' => $path,
+                        'sale_img_created_at'  => Carbon::now(),
+                        'sale_img_updated_at'  => Carbon::now()
+                    ]);
+                }          
+            );
+   
             $imgs = DB::table('sale_img')->where('sale_id', $request->sale_id)->get();
                 
             $template = view('admin.partials.sale_img', ['imgs' => $imgs])->render();
 
             return Response()->json(["success" => true, "template" => $template]);
-
-        }
-        catch(Exception $e){
-            return Redirect::to(URL::previous() . "#sale-img")->with('success', 'Có lỗi xảy ra!');
-        }
     }
 
     public function delete(Request $request){

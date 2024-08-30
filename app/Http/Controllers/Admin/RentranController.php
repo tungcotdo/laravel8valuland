@@ -42,7 +42,7 @@ class RentranController extends Controller
     public function edit(Request $request){
         $this->_authorization(20);
         $rent = DB::table('rent')->where('rent_id', $request->rent_id)->first();
-        return view('admin.rent.edit-transaction', ['rent' => $rent, 'house' => new House]);
+        return view('admin.rent.edit-transaction', ['rent' => $rent, 'house' => new HouseService]);
     }
 
     public function update(Request $request){

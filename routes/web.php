@@ -21,7 +21,6 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::prefix('admin')->group(function () {
-
         Route::prefix('dashboard')->group(function () {
             Route::get('index', ['as' => 'admin.dashboard.index', 'uses' => 'Admin\DashboardController@index']);
         });
@@ -93,17 +92,17 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('sold/{rent_id}', ['as' => 'admin.rentran.sold', 'uses' => 'Admin\RentranController@sold']);
             Route::get('delete/{rent_id}', ['as' => 'admin.rentran.delete', 'uses' => 'Admin\RentranController@delete']);
         });
-    
+
         Route::prefix('rentimg')->group(function () {
-            Route::post('render/{rent_id}', ['as' => 'admin.rentimg.render', 'uses' => 'Admin\RentimgController@render']);
-            Route::post('upload/{rent_id}', ['as' => 'admin.rentimg.upload', 'uses' => 'Admin\RentimgController@upload']);
-            Route::post('delete/{rent_img_id}', ['as' => 'admin.rentimg.delete', 'uses' => 'Admin\RentimgController@delete']);
+            Route::post('render/{rent_id}', ['as' => 'admin.rentimg.render', 'uses' => 'Shared\RentimgController@render']);
+            Route::post('upload/{rent_id}', ['as' => 'admin.rentimg.upload', 'uses' => 'Shared\RentimgController@upload']);
+            Route::post('delete/{rent_img_id}', ['as' => 'admin.rentimg.delete', 'uses' => 'Shared\RentimgController@delete']);
         });
     
         Route::prefix('rentvideo')->group(function () {
-            Route::post('render/{rent_id}', ['as' => 'admin.rentvideo.render', 'uses' => 'Admin\RentvideoController@render']);
-            Route::post('upload/{rent_id}', ['as' => 'admin.rentvideo.upload', 'uses' => 'Admin\RentvideoController@upload']);
-            Route::post('delete/{rent_id}', ['as' => 'admin.rentvideo.delete', 'uses' => 'Admin\RentvideoController@delete']);
+            Route::post('render/{rent_id}', ['as' => 'admin.rentvideo.render', 'uses' => 'Shared\RentvideoController@render']);
+            Route::post('upload/{rent_id}', ['as' => 'admin.rentvideo.upload', 'uses' => 'Shared\RentvideoController@upload']);
+            Route::post('delete/{rent_id}', ['as' => 'admin.rentvideo.delete', 'uses' => 'Shared\RentvideoController@delete']);
         });
     
         // Contract
@@ -137,7 +136,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('update/{user_id}', ['as' => 'admin.user.update', 'uses' => 'Admin\UserController@update']);
             Route::get('delete/{user_id}', ['as' => 'admin.user.delete', 'uses' => 'Admin\UserController@delete']);
         });
-    
     
         // Authorization
         Route::prefix('authorization')->group(function () {

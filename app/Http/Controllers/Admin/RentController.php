@@ -47,7 +47,7 @@ class RentController extends Controller
         }
 
         $rent_selects = $query->get();
-        return view('admin.rent.select', ['rent_selects' => $rent_selects, 'house' => new House]);
+        return view('admin.rent.select', ['rent_selects' => $rent_selects, 'house' => new HouseService]);
     }
     public function sold(Request $request){
         $this->_authorization(7);
@@ -58,7 +58,7 @@ class RentController extends Controller
         }
 
         $rent_solds = $query->get();
-        return view('admin.rent.sold', ['rent_solds' => $rent_solds, 'house' => new House]);
+        return view('admin.rent.sold', ['rent_solds' => $rent_solds, 'house' => new HouseService]);
     }
     public function transaction(Request $request){
         $this->_authorization(8);
@@ -91,7 +91,7 @@ class RentController extends Controller
     public function edit(Request $request){
         $this->_authorization(20);
         $rent = DB::table('rent')->where('rent_id', $request->rent_id)->first();
-        return view('admin.rent.edit', ['rent' => $rent, 'house' => new House]);
+        return view('admin.rent.edit', ['rent' => $rent, 'house' => new HouseService]);
     }
     public function store(Request $request){
         $this->_authorization(20);
