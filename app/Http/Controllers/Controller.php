@@ -23,10 +23,13 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public $_message = [
+        'store'  => 'Thêm dữ liệu thành công',
+        'update' => 'Cập nhật dữ liệu thành công',
+        'delete' => 'Xóa dữ liệu thành công'
+    ];
+
     function __construct(){
-
-        Artisan::call('cache:clear');
-
         $this->middleware(function ($request, $next) {
             $compact['_notification'] = DB::table('notification as n')
             ->leftjoin('notification_user as nu', 'n.notification_id', '=', 'nu.notification_id')
@@ -58,9 +61,8 @@ class Controller extends BaseController
         $user_group_function = DB::table('user_group_function')->where('user_group_id', Auth::user()->user_group_id)->first();
 
         $function_ids = explode(',', $user_group_function->function_id);
-
         if( !in_array($function_id, $function_ids) ){
-            dd("Bạn không có quyền truy cập");
+            return view('error.404');
         }
     }
 }

@@ -5,8 +5,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{{route('admin.dashboard.index')}}">Trang chủ</a></li>
-          <li class="breadcrumb-item"><a href="{{route('admin.sale.raw')}}">Danh sách bán sơ</a></li>
-          <li class="breadcrumb-item"><a href="{{route('admin.sale.select')}}">Danh sách bán tinh</a></li>
+          <li class="breadcrumb-item"><a href="{{route('shared.sale.raw')}}">Danh sách bán sơ</a></li>
+          <li class="breadcrumb-item"><a href="{{route('shared.sale.select')}}">Danh sách bán tinh</a></li>
           <li class="breadcrumb-item active">Sửa dữ liệu bán</li>
         </ol>
       </nav>
@@ -20,7 +20,7 @@
           <div class="row">
 
             <!-- Start col-lg-12 -->
-            <form class="col-lg-12" action="{{route('admin.sale.update', $sale->sale_id)}}" method="POST" id="admin-sale-edit">
+            <form class="col-lg-12" action="{{route('shared.sale.update', $sale->sale_id)}}" method="POST" id="admin-sale-edit">
               @csrf  
               <input type="hidden" name="sale_status" value="{{$sale->sale_status}}">
               <div class="card">
@@ -146,8 +146,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-img-modal-close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{route('admin.saleimg.upload', $sale->sale_id)}}" id="admin-sale-uploadimg" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="sale-loadimg-url" value="{{route('admin.saleimg.render', $sale->sale_id)}}">
+            <form action="{{route('shared.saleimg.upload', $sale->sale_id)}}" id="admin-sale-uploadimg" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="sale-loadimg-url" value="{{route('shared.saleimg.render', $sale->sale_id)}}">
                 @csrf
                 <div class="row">
                     <div class="col-auto validate">
@@ -173,8 +173,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-video-modal-close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{route('admin.salevideo.upload', $sale->sale_id)}}" id="admin-salevideo-upload" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="admin-salevideo-upload-url" value="{{route('admin.salevideo.render', $sale->sale_id)}}">
+            <form action="{{route('shared.salevideo.upload', $sale->sale_id)}}" id="admin-salevideo-upload" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="admin-salevideo-upload-url" value="{{route('shared.salevideo.render', $sale->sale_id)}}">
                 @csrf
                 <div class="row">
                     <div class="col-auto validate">

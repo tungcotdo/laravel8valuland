@@ -36,13 +36,13 @@ class SaletranController extends Controller
         }
 
         $sale_transactions = $query->get();
-        return view('admin.saletran.index', ['sale_transactions' => $sale_transactions]);
+        return view('shared.saletran.index', ['sale_transactions' => $sale_transactions]);
     }
 
     public function edit(Request $request){
         $this->_authorization(20);
         $sale = DB::table('sale')->where('sale_id', $request->sale_id)->first();
-        return view('admin.sale.edit-transaction', ['sale' => $sale, 'house' => new House]);
+        return view('shared.sale.edit-transaction', ['sale' => $sale, 'house' => new House]);
     }
 
     public function update(Request $request){
@@ -78,7 +78,7 @@ class SaletranController extends Controller
                 'sale_updated_at'  => Carbon::now()
             ]);
             
-            return redirect()->route('admin.saletran.index')->with('success', 'Cập nhật dữ liệu giao dịch thành công!');
+            return redirect()->route('shared.saletran.index')->with('success', 'Cập nhật dữ liệu giao dịch thành công!');
            
         }
         catch(Exception $e){

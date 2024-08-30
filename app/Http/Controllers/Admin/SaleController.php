@@ -11,10 +11,20 @@ use DB;
 use Carbon\Carbon;
 use Auth;
 use App\Services\HouseService;
+use App\Services\SaleService;
 use Validator,Response,File,Route;
 
 class SaleController extends Controller
 {
+    private $_sale;
+    private $_house;
+
+    function __constructor(){
+        parent::__construct();
+        $this->_sale = new SaleService();
+        $this->_house = new HouseService();
+    }
+
     public function raw(Request $request){
         $this->_authorization(6);
         $query = DB::table('sale')->where('sale_status', 1);
@@ -48,7 +58,7 @@ class SaleController extends Controller
         }
 
         $sale_selects = $query->get();
-        return view('admin.sale.select', ['sale_selects' => $sale_selects, 'house' => new HouseService]);
+        return view('admin.sale.select', ['sale_selects' => $sale_selects, 'house' => $this->_house]);
     }
     
     public function sold(Request $request){
@@ -60,7 +70,7 @@ class SaleController extends Controller
         }
 
         $sale_solds = $query->get();
-        return view('admin.sale.sold', ['sale_solds' => $sale_solds, 'house' => new HouseService]);
+        return view('admin.sale.sold', ['sale_solds' => $sale_solds, 'house' => $this->_house]);
     }
     
     public function add(Request $request){
@@ -70,60 +80,22 @@ class SaleController extends Controller
     public function edit(Request $request){
         $this->_authorization(20);
         $sale = DB::table('sale')->where('sale_id', $request->sale_id)->first();
-        return view('admin.sale.edit', ['sale' => $sale, 'house' => new HouseService]);
+        return view('admin.sale.edit', ['sale' => $sale, 'house' => $this->_house]);
     }
 
     public function update(Request $request){
         $this->_authorization(20);
-        //Required fields to select list
-        $flag = array_filter([
-            'code' => $request->code,
-            'owner_name' => $request->owner_name,
-            'owner_phone' => $request->owner_phone,
-            'sale_style' => $request->sale_style,
-            'sale_direction' => $request->sale_direction,
-            'sale_navigable_area' => $request->sale_navigable_area,
-            'sale_price' => $request->sale_price
-        ], function ($a) { 
-            return $a == null;
-        });
-
-        $sale_status = empty($flag) ? 2 : 1;
-
-        DB::table('sale')->where('sale_id', $request->sale_id)->update([
-            'sale_status' => $sale_status,
-            'code' => $request->code,
-            'owner_name' => $request->owner_name,
-            'owner_phone' => $request->owner_phone,
-            'owner_email' => $request->owner_email,
-            'sale_subdivision' => $request->sale_subdivision,
-            'sale_building' => $request->sale_building,
-            'sale_floor' => $request->sale_floor,
-            'sale_style' => $request->sale_style,
-            'sale_room' => $request->sale_room,
-            'sale_direction' => $request->sale_direction,
-            'sale_navigable_area' => $request->sale_navigable_area,
-            'sale_price' => $request->sale_price,
-            'sale_description' => $request->sale_description,
-            'sale_deposit' => $request->sale_deposit,
-            'sale_deposit_date' => $request->sale_deposit_date,
-            'sale_contract_date' => $request->sale_contract_date,
-            'sale_broker' => $request->sale_broker,
-            'sale_legal_person' => $request->sale_legal_person,
-            'sale_contract_img' => $request->sale_contract_img,
-            'sale_style' => $request->sale_style,
-            'sale_created_by'  => Auth::user()->email,
-            'sale_updated_by'  => Auth::user()->email,
-            'sale_created_at'  => Carbon::now(),
-            'sale_updated_at'  => Carbon::now()
-        ]);
+        $this->_sale->update($request);
 
         if( $request->sale_status == 1 ){
-            return redirect()->route('admin.sale.raw')->with('success', 'Cập nhật dữ liệu danh sách bán thành công!');
-        }elseif( $request->sale_status == 2 ){
-            return redirect()->route('admin.sale.select')->with('success', 'Cập nhật dữ liệu danh sách bán thành công!');
+            return redirect()->route('admin.sale.raw')->with('success', $this->_message['update']);
         }
-        return redirect()->back()->with('success', 'Cập nhật dữ liệu danh sách bán thành công!');
+        
+        if( $request->sale_status == 2 ){
+            return redirect()->route('admin.sale.select')->with('success', $this->_message['update']);
+        }
+
+        return redirect()->back()->with('success', $this->_message['update']);
     }
 
     public function delete(Request $request){
@@ -137,6 +109,6 @@ class SaleController extends Controller
         DB::table('sale')->where('sale_id', $request->sale_id)->update([
             'sale_status' => $request->sale_status
         ]);
-        return redirect()->back()->with('success', 'Cập nhật dữ liệu danh sách bán thành công!');
+        return redirect()->back()->with('success', $this->_message['update']);
     }
 }

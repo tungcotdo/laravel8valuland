@@ -19,7 +19,21 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('detail/{sale_id}', ['as' => 'web.sale.detail', 'uses' => 'Web\SaleController@detail']);
         });
     });
-
+    
+    Route::prefix('shared')->group(function () {
+        Route::prefix('saleimg')->group(function () {
+            Route::post('render/{sale_id}', ['as' => 'admin.saleimg.render', 'uses' => 'Admin\SaleimgController@render']);
+            Route::post('upload/{sale_id}', ['as' => 'admin.saleimg.upload', 'uses' => 'Admin\SaleimgController@upload']);
+            Route::post('delete/{sale_img_id}', ['as' => 'admin.saleimg.delete', 'uses' => 'Admin\SaleimgController@delete']);
+        });
+    
+        Route::prefix('salevideo')->group(function () {
+            Route::post('render/{sale_id}', ['as' => 'admin.salevideo.render', 'uses' => 'Admin\SalevideoController@render']);
+            Route::post('upload/{sale_id}', ['as' => 'admin.salevideo.upload', 'uses' => 'Admin\SalevideoController@upload']);
+            Route::post('delete/{sale_id}', ['as' => 'admin.salevideo.delete', 'uses' => 'Admin\SalevideoController@delete']);
+        });
+    });
+    
     Route::prefix('admin')->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('index', ['as' => 'admin.dashboard.index', 'uses' => 'Admin\DashboardController@index']);
@@ -38,7 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('delete/{owner_id}', ['as' => 'admin.owner.delete', 'uses' => 'Admin\OwnerController@delete']);
             Route::get('truncate', ['as' => 'admin.owner.truncate', 'uses' => 'Admin\OwnerController@truncate']);
         });
-    
+
         // Sale
         Route::prefix('sale')->group(function () {
             Route::get('raw', ['as' => 'admin.sale.raw', 'uses' => 'Admin\SaleController@raw']);
@@ -59,19 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('sold/{sale_id}', ['as' => 'admin.saletran.sold', 'uses' => 'Admin\SaletranController@sold']);
             Route::get('delete/{sale_id}', ['as' => 'admin.saletran.delete', 'uses' => 'Admin\SaletranController@delete']);
         });
-    
-        Route::prefix('saleimg')->group(function () {
-            Route::post('render/{sale_id}', ['as' => 'admin.saleimg.render', 'uses' => 'Admin\SaleimgController@render']);
-            Route::post('upload/{sale_id}', ['as' => 'admin.saleimg.upload', 'uses' => 'Admin\SaleimgController@upload']);
-            Route::post('delete/{sale_img_id}', ['as' => 'admin.saleimg.delete', 'uses' => 'Admin\SaleimgController@delete']);
-        });
-    
-        Route::prefix('salevideo')->group(function () {
-            Route::post('render/{sale_id}', ['as' => 'admin.salevideo.render', 'uses' => 'Admin\SalevideoController@render']);
-            Route::post('upload/{sale_id}', ['as' => 'admin.salevideo.upload', 'uses' => 'Admin\SalevideoController@upload']);
-            Route::post('delete/{sale_id}', ['as' => 'admin.salevideo.delete', 'uses' => 'Admin\SalevideoController@delete']);
-        });
-    
+
         // Rent
         Route::prefix('rent')->group(function () {
             Route::get('raw', ['as' => 'admin.rent.raw', 'uses' => 'Admin\RentController@raw']);

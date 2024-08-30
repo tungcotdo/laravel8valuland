@@ -9,18 +9,18 @@ class UploadService
 
     private $_UPLOAD_PATH = 'upload';
 
-    public function uploadOneFile($paramFile, $paramPath ,$paramDelpath = NULL){
+    public function uploadOneFile($param){
         try{
-            $file = $request->file($paramFile);
+            $file = $request->file($param['filename']);
 
             $file_name = rand().'.'.$file->extension();
                 
-            $upload_path = $this->_UPLOAD_PATH. '/'. $paramPath  . '/';
+            $upload_path = $this->_UPLOAD_PATH. '/'. $param['uploadpath']  . '/';
             
             $file->move($upload_path, $file_name);
 
-            if( !empty( $paramDelpath ) ){
-                File::delete($paramDelpath);
+            if( !empty( $param['delpath'] ) ){
+                File::delete($param['delpath']);
             }
 
             return true;
@@ -30,28 +30,29 @@ class UploadService
         }
     }
 
-    public function uploadManyFile($paramFile, $paramPath, $callback ,$paramDelpath = NULL){
+    public function uploadManyFile($param){
         try{
-            $files = $request->file($paramFile);
+            $files = $request->file($param['filename']);
 
             foreach( $files as $key => $file ){
 
                 $file_name = rand().'.'.$file->extension();
                     
-                $upload_path = $this->_UPLOAD_PATH. '/'. $paramPath  . '/';
+                $upload_path = $this->_UPLOAD_PATH. '/'. $param['uploadpath']  . '/';
                 
                 $file->move($upload_path, $file_name);
     
-                if( !empty( $paramDelpath ) ){
-                    File::delete($paramDelpath);
+                if( !empty( $param['delpath'] ) ){
+                    File::delete($param['delpath']);
                 }
 
-                $callback($upload_path . $file_name);
+                if( !empty( $param['callback'] ) ){
+                    $param['callback']($upload_path . $file_name);
+                }
+                
             }
 
-            if( !empty( $uploadPath ) ){
-                return $uploadPath;
-            }
+            return true;
             
         }
         catch(Exception $e){
