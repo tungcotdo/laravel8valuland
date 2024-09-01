@@ -25,9 +25,18 @@ class Controller extends BaseController
 
     public $_message = [
         'store'  => 'Thêm dữ liệu thành công',
-        'update' => 'Cập nhật dữ liệu thành công',
+        'update' => 'Cập nhật thành công',
         'delete' => 'Xóa dữ liệu thành công'
     ];
+
+    public function _authorization($function_id){
+        $user_group_function = DB::table('user_group_function')->where('user_group_id', Auth::user()->user_group_id)->first();
+        $function_ids = explode(',', $user_group_function->function_id);
+        if( !in_array($function_id, $function_ids) ){
+            return redirect()->route('error.404');
+        }
+        return true;
+    }
 
     function __construct(){
         $this->middleware(function ($request, $next) {
@@ -43,26 +52,12 @@ class Controller extends BaseController
             ->where('notification_isread', 0)
             ->count();
 
-            $compact['_authorization'] =  function($function_id){
-                $user_group_function = DB::table('user_group_function')->where('user_group_id', Auth::user()->user_group_id)->first();
-                $function_ids = explode(',', $user_group_function->function_id);
-                if( !in_array($function_id, $function_ids) ){
-                    return false;
-                }
-                return true;
+            $compact['_authorization'] = function($function_id){
+                $this->_authorization($function_id);
             };
 
             View::share($compact);
             return $next($request);
         });
-    }
-
-    public function _authorization($function_id){
-        $user_group_function = DB::table('user_group_function')->where('user_group_id', Auth::user()->user_group_id)->first();
-
-        $function_ids = explode(',', $user_group_function->function_id);
-        if( !in_array($function_id, $function_ids) ){
-            return view('error.404');
-        }
     }
 }

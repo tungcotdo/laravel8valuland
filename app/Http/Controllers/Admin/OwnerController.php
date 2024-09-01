@@ -13,8 +13,8 @@ use Auth;
 
 class OwnerController extends Controller
 {
+
     public function index(Request $request){
-        $this->_authorization(2);
 
         $query = DB::table('owner');
 
@@ -32,6 +32,10 @@ class OwnerController extends Controller
 
         if( !empty( $request->owner_demand ) ){
             $query->where( 'owner_demand', $request->owner_demand );
+        }
+
+        if( !empty( $request->owner_telesale ) ){
+            $query->where( 'user_id', $request->owner_telesale );
         }
 
         $compact['owners'] = $query->get();
@@ -246,7 +250,7 @@ class OwnerController extends Controller
                 'sale_created_at'  => Carbon::now(),
                 'sale_updated_at'  => Carbon::now()
             ]);
-            return redirect()->back()->with('success', $this->_message['store']);
+            return redirect()->back()->with('success', $this->_message['update']);
         }elseif( $request['owner_demand'] == 2 ){
             DB::table('rent')->insert([
                 'rent_status' => 1,
@@ -259,8 +263,20 @@ class OwnerController extends Controller
                 'rent_created_at'  => Carbon::now(),
                 'rent_updated_at'  => Carbon::now()
             ]);
-            return redirect()->back()->with('success', $this->_message['store']);
+            return redirect()->back()->with('success', $this->_message['update']);
         }
+    }
+
+    public function updateTelesale(Request $request){
+        DB::table('owner')
+        ->where('owner_id', $request->owner_id)
+        ->update([
+            'user_id'  => $request->user_id,
+            'owner_updated_by'  => Auth::user()->email,
+            'owner_updated_at'  => Carbon::now()
+        ]);
+
+        return redirect()->back()->with('success', $this->_message['update']);
     }
 
     public function delete(Request $request){

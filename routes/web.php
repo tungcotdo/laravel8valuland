@@ -11,6 +11,10 @@ Route::get('/', function () {
     return redirect()->route('web.sale.index');
 });
 
+Route::prefix('error')->group(function () {
+    Route::get('404', ['as' => 'error.404', 'uses' => 'Shared\ErrorController@e404']);
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::prefix('web')->group(function () {
         Route::prefix('sale')->group(function () {
@@ -53,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('edit/{owner_id}', ['as' => 'admin.owner.edit', 'uses' => 'Admin\OwnerController@edit']);
             Route::post('update/{owner_id}', ['as' => 'admin.owner.update', 'uses' => 'Admin\OwnerController@update']);
             Route::get('update-demand/{owner_id}/{owner_demand}', ['as' => 'admin.owner.update-demand', 'uses' => 'Admin\OwnerController@updateDemand']);
+            Route::get('update-telesale/{owner_id}/{user_id}', ['as' => 'admin.owner.update-telesale', 'uses' => 'Admin\OwnerController@updateTelesale']);
             Route::get('delete/{owner_id}', ['as' => 'admin.owner.delete', 'uses' => 'Admin\OwnerController@delete']);
             Route::get('truncate', ['as' => 'admin.owner.truncate', 'uses' => 'Admin\OwnerController@truncate']);
         });

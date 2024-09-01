@@ -46,8 +46,9 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th scope="col">Tên</th>
                           <th scope="col">Nhóm</th>
+                          <th scope="col">Tên</th>
+                          <th scope="col">Hành động</th>
                           <th scope="col">Chọn</th>
                         </tr>
                       </thead>
@@ -55,8 +56,10 @@
                           <?php if( !empty( $functions ) ): ?>
                               <?php $__currentLoopData = $functions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                               <tr>
-                                  <td><?php echo e($value->function_name); ?></td>
                                   <td><?php echo e($value->function_group); ?></td>
+                                  <td><?php echo e($value->function_desc); ?></td>
+                                  <td><?php echo e($value->function_action); ?></td>
+                                 
                                   <td>
                                     <?php
                                     $checked = '';

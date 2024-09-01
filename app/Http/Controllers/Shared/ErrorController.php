@@ -15,7 +15,7 @@ use Validator,Response,File,Route;
 
 class ErrorController extends Controller
 {
-    public function denined(Request $request){
+    public function e404(Request $request){
         dd("Bạn không có quyền truy cập");
     }
     

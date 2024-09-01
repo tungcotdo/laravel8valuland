@@ -46,8 +46,9 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                          <th scope="col">Tên</th>
                           <th scope="col">Nhóm</th>
+                          <th scope="col">Tên</th>
+                          <th scope="col">Hành động</th>
                           <th scope="col">Chọn</th>
                         </tr>
                       </thead>
@@ -55,8 +56,10 @@
                           @if( !empty( $functions ) )
                               @foreach( $functions as $value )
                               <tr>
-                                  <td>{{$value->function_name}}</td>
                                   <td>{{$value->function_group}}</td>
+                                  <td>{{$value->function_desc}}</td>
+                                  <td>{{$value->function_action}}</td>
+                                 
                                   <td>
                                     <?php
                                     $checked = '';
