@@ -44,11 +44,14 @@
                 <small class="error-message text-danger"></small>
             </div>
             <div class="col-md-2">
-                <label for="owner_demand" class="form-label form-label-sm">Phụ trách</label>
+                <label for="owner_demand" class="form-label form-label-sm">Telesale</label>
                 <select id="owner_demand" class="form-select form-select-sm w-100" name="owner_demand">
                     <option value="0">Không có</option>
-                    <option value="1" <?php echo e(request()->owner_demand == 1 ? 'selected' : ''); ?>>Bán</option>
-                    <option value="2" <?php echo e(request()->owner_demand == 2 ? 'selected' : ''); ?>>Thuê</option>
+                    <?php if( !empty( $telesales ) ): ?>
+                      <?php $__currentLoopData = $telesales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($value->id); ?>"><?php echo e($value->name); ?></option>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    <?php endif; ?>
                 </select>
             </div>
             <div class="col-md-2">
@@ -90,7 +93,7 @@
                     <th scope="col" class="small">MÃ CĂN</th>
                     <th scope="col" class="small">TÊN</th>
                     <th scope="col" class="small">ĐIỆN THOẠI</th>
-                    <th scope="col" class="small">PHỤ TRÁCH</th>
+                    <th scope="col" class="small">TELESALE</th>
                     <th scope="col" class="small">NHU CẦU</th>
                     <th scope="col" class="small">HÀNH ĐỘNG</th>
                   </tr>
@@ -101,7 +104,15 @@
                             <td style="border-bottom: 1px solid #f3f3f3;"><?php echo e($value->code); ?></td>
                             <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;"><?php echo e($value->owner_name); ?></td>
                             <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;"><?php echo e($value->owner_phone); ?></td>
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">Ngân</td>
+                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">
+                            <select class="form-control form-control-sm owner-telesale-slb">
+                              <?php if( !empty( $telesales ) ): ?>
+                                <?php $__currentLoopData = $telesales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $telesale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <option value="<?php echo e($value->user_id); ?>" <?php echo e($value->user_id == $telesale->id ? 'selected' : ''); ?>><?php echo e($telesale->name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                              <?php endif; ?>
+                            </select>
+                            </td>
                             <td style="border-bottom: 1px solid #f3f3f3; min-width: 100px;">
                                 <select class="form-control form-control-sm owner-demand-slb">
                                     <option value="0">Không có</option>

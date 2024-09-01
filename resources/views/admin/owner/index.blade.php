@@ -44,11 +44,14 @@
                 <small class="error-message text-danger"></small>
             </div>
             <div class="col-md-2">
-                <label for="owner_demand" class="form-label form-label-sm">Phụ trách</label>
+                <label for="owner_demand" class="form-label form-label-sm">Telesale</label>
                 <select id="owner_demand" class="form-select form-select-sm w-100" name="owner_demand">
                     <option value="0">Không có</option>
-                    <option value="1" {{ request()->owner_demand == 1 ? 'selected' : '' }}>Bán</option>
-                    <option value="2" {{ request()->owner_demand == 2 ? 'selected' : '' }}>Thuê</option>
+                    @if( !empty( $telesales ) )
+                      @foreach( $telesales as $key => $value )
+                        <option value="{{$value->id}}">{{$value->name}}</option>
+                      @endforeach
+                    @endif
                 </select>
             </div>
             <div class="col-md-2">
@@ -90,7 +93,7 @@
                     <th scope="col" class="small">MÃ CĂN</th>
                     <th scope="col" class="small">TÊN</th>
                     <th scope="col" class="small">ĐIỆN THOẠI</th>
-                    <th scope="col" class="small">PHỤ TRÁCH</th>
+                    <th scope="col" class="small">TELESALE</th>
                     <th scope="col" class="small">NHU CẦU</th>
                     <th scope="col" class="small">HÀNH ĐỘNG</th>
                   </tr>
@@ -101,7 +104,15 @@
                             <td style="border-bottom: 1px solid #f3f3f3;">{{ $value->code }}</td>
                             <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">{{ $value->owner_name }}</td>
                             <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">{{ $value->owner_phone }}</td>
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">Ngân</td>
+                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">
+                            <select class="form-control form-control-sm owner-telesale-slb">
+                              @if( !empty( $telesales ) )
+                                @foreach( $telesales as $key => $telesale )
+                                  <option value="{{$value->user_id}}" {{ $value->user_id == $telesale->id ? 'selected' : '' }}>{{$telesale->name}}</option>
+                                @endforeach
+                              @endif
+                            </select>
+                            </td>
                             <td style="border-bottom: 1px solid #f3f3f3; min-width: 100px;">
                                 <select class="form-control form-control-sm owner-demand-slb">
                                     <option value="0">Không có</option>

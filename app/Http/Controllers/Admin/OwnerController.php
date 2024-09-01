@@ -34,8 +34,11 @@ class OwnerController extends Controller
             $query->where( 'owner_demand', $request->owner_demand );
         }
 
-        $owners = $query->get();
-        return view('admin.owner.index', ['owners' => $owners]);
+        $compact['owners'] = $query->get();
+
+        $compact['telesales'] = DB::table('users')->where('user_group_id', 3)->get();
+
+        return view('admin.owner.index', $compact);
     }
 
     public function add(Request $request){
