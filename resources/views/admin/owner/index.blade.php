@@ -101,19 +101,19 @@
                 <tbody>
                     @foreach($owners as $key => $value)
                         <tr>
-                            <td style="border-bottom: 1px solid #f3f3f3;">{{ $value->code }}</td>
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">{{ $value->owner_name }}</td>
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">{{ $value->owner_phone }}</td>
+                            <td>{{ $value->code }}</td>
+                            <td style="max-width: 200px; overflow-x: auto;">{{ $value->owner_name }}</td>
+                            <td style="max-width: 200px; overflow-x: auto;">{{ $value->owner_phone }}</td>
                             
-                            <td style="border-bottom: 1px solid #f3f3f3; min-width: 100px;">
+                            <td style="min-width: 100px;">
                                 <select class="form-control form-control-sm owner-demand-slb">
                                     <option value="0">Không có</option>
                                     <option {{ $value->owner_demand == 1 ? 'selected' : '' }} value="{{route('admin.owner.update-demand', [$value->owner_id, 1])}}" >Bán</option>
                                     <option {{ $value->owner_demand == 2 ? 'selected' : '' }} value="{{route('admin.owner.update-demand', [$value->owner_id, 2])}}">Thuê</option>
                                 </select>
                             </td>
-                            
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: fit-content; overflow-x: auto;">
+
+                            <td style="max-width: fit-content; overflow-x: auto;">
                               <select class="form-control form-control-sm owner-telesale-slb">
                                 @if( !empty( $telesales ) )
                                   @foreach( $telesales as $key => $telesale )
@@ -123,7 +123,7 @@
                               </select>
                             </td>
 
-                            <td style="border-bottom: 1px solid #f3f3f3;">
+                            <td>
                                 <a href="{{ route('admin.owner.edit', $value->owner_id) }}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square small"> Sửa</i></a>
                                 <a href="{{ route('admin.owner.delete', $value->owner_id) }}" onclick="return confirm('Bạn có muốn xóa dữ liệu này không?')" class="btn btn-sm btn-danger"><i class="bi bi-trash small"> Xóa</i></a>
                             </td>
