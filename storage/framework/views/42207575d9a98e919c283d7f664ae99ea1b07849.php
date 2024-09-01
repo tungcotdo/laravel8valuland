@@ -86,7 +86,6 @@
               <div class="card-filter">
 
               </div>
-
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -99,6 +98,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                    
                     <?php $__currentLoopData = $owners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($value->code); ?></td>
@@ -123,7 +123,7 @@
                               </select>
                             </td>
 
-                            <td style="">
+                            <td>
                                 <a href="<?php echo e(route('admin.owner.edit', $value->owner_id)); ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square small"> Sửa</i></a>
                                 <a href="<?php echo e(route('admin.owner.delete', $value->owner_id)); ?>" onclick="return confirm('Bạn có muốn xóa dữ liệu này không?')" class="btn btn-sm btn-danger"><i class="bi bi-trash small"> Xóa</i></a>
                             </td>

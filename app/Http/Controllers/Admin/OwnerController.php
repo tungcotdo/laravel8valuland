@@ -10,11 +10,20 @@ use App\Imports\FileImport;
 use DB;
 use Carbon\Carbon;
 use Auth;
+use App\Services\OwnerService;
 
 class OwnerController extends Controller
 {
 
+    private $_owner;
+
+    function __constructor(){
+        parent::__construct();
+        $this->_owner = new OwnerService();
+    }
+
     public function index(Request $request){
+        //$this->_authorization(2);
 
         $query = DB::table('owner');
 
@@ -38,6 +47,10 @@ class OwnerController extends Controller
             $query->where( 'user_id', $request->owner_telesale );
         }
 
+        if( Auth::user()->user_group_id == 3 ){
+            $query->where('user_id', Auth::user()->id);
+        }
+
         $compact['owners'] = $query->get();
 
         $compact['telesales'] = DB::table('users')->where('user_group_id', 3)->get();
@@ -51,41 +64,8 @@ class OwnerController extends Controller
     }
 
     public function arrange(Request $request){
-
-        $telesale_query = DB::table('users')->where('user_group_id', 3);
-
-        $telesale_number = $telesale_query->count();
-
-        $telesales = $telesale_query->get();
-
-        $owner_query = DB::table('owner');
-
-        $owners = DB::table('owner')->get();
-
-        $owner_number = $owner_query->count();
-
-        if( !empty( $telesale_number ) && !empty( $owner_number ) ){
-            $break = round( $owner_number / $telesale_number );
-
-            foreach( $telesales as $ktelesale => $vtelesale ){
-                $index = $ktelesale + 1;
-
-                if( $index == 2 ){
-                    $telesale_s = $index == 1 ? $index : (($index - 1) * $break);
-                    $telesale_e = $index * $break;
-                    DB::table('owner')
-                    ->whereBetween('owner_id', [$telesale_s, $telesale_e])
-                    ->update([
-                        'user_id' => $vtelesale->id
-                    ]);
-                }
-                
-
-            }
-        }
-
+        $this->_owner->arrange();
         return redirect()->back()->with('success', $this->_message['update']);
-
     }
 
     public function store(Request $request){

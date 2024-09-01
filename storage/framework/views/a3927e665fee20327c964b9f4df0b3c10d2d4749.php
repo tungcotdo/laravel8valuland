@@ -10,29 +10,32 @@
     </a>
   </li><!-- End Dashboard Nav -->
 
-  <!-- Owner nav -->
-  <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#owner-nav" data-bs-toggle="collapse" href="#">
-      <i class="bi bi-box-arrow-in-down"></i><span>Chủ nhà</span><i class="bi bi-chevron-down ms-auto"></i>
-    </a>
-    <ul id="owner-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-      <li>
-        <a href="<?php echo e(route('admin.owner.index')); ?>">
-          <i class="bi bi-circle"></i><span>Danh sách</span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo e(route('admin.owner.form-upload-excel')); ?>">
-          <i class="bi bi-circle"></i><span>Tải file Excel</span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo e(route('admin.owner.add')); ?>">
-          <i class="bi bi-circle"></i><span>Thêm mới</span>
-        </a>
-      </li>
-    </ul>
-  </li><!-- End owner nav -->
+  <?php if( $_authorization(2, true) ): ?>
+    <!-- Owner nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#owner-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-box-arrow-in-down"></i><span>Chủ nhà</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="owner-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="<?php echo e(route('admin.owner.index')); ?>">
+            <i class="bi bi-circle"></i><span>Danh sách</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo e(route('admin.owner.form-upload-excel')); ?>">
+            <i class="bi bi-circle"></i><span>Tải file Excel</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo e(route('admin.owner.add')); ?>">
+            <i class="bi bi-circle"></i><span>Thêm mới</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End owner nav -->
+  <?php endif; ?>
+
 
   <!-- Sale nav -->
   <li class="nav-item">

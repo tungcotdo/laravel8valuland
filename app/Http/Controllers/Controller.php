@@ -29,16 +29,20 @@ class Controller extends BaseController
         'delete' => 'Xóa dữ liệu thành công'
     ];
 
-    public function _authorization($function_id){
+    public function _authorization($function_id, $view = false){
         $user_group_function = DB::table('user_group_function')->where('user_group_id', Auth::user()->user_group_id)->first();
         $function_ids = explode(',', $user_group_function->function_id);
         if( !in_array($function_id, $function_ids) ){
-            return redirect()->route('error.404');
+            if( !$view ){
+                throw new \Illuminate\Http\Exceptions\HttpResponseException(redirect()->route('error.404'));
+            }
+            return false;
         }
         return true;
     }
 
     function __construct(){
+        
         $this->middleware(function ($request, $next) {
             $compact['_notification'] = DB::table('notification as n')
             ->leftjoin('notification_user as nu', 'n.notification_id', '=', 'nu.notification_id')
@@ -52,8 +56,8 @@ class Controller extends BaseController
             ->where('notification_isread', 0)
             ->count();
 
-            $compact['_authorization'] = function($function_id){
-                $this->_authorization($function_id);
+            $compact['_authorization'] = function($function_id, $view = false){
+                return $this->_authorization($function_id,  $view);
             };
 
             View::share($compact);

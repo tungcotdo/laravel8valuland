@@ -10,11 +10,20 @@ use App\Imports\FileImport;
 use DB;
 use Carbon\Carbon;
 use Auth;
+use App\Services\OwnerService;
 
 class UserController extends Controller
 {
+
+    private $_owner;
+
+    function __constructor(){
+        parent::__construct();
+        $this->_owner = new OwnerService();
+    }
+
     public function index(Request $request){
-        $this->_authorization(34);
+        
         $query = DB::table('users');
 
         if( !empty( $request->name ) ){
@@ -34,12 +43,12 @@ class UserController extends Controller
         return view('admin.user.index', $compact);
     }
     public function add(Request $request){
-        $this->_authorization(34);
+        
         $compact['user_groups'] = DB::table('user_group')->get();
         return view('admin.user.add', $compact);
     }
     public function store(Request $request){
-        $this->_authorization(34);
+        
         $isEmail = DB::table('users')->where('email', $request['user_email'])->first();
 
         if( !empty( $isEmail ) ){
@@ -47,6 +56,8 @@ class UserController extends Controller
         }
 
         $user_group = explode( '_', $request->user_group );
+
+        $this->_owner->arrange();
         
         DB::table('users')->insert([
             'name'  => $request['user_name'],
@@ -61,14 +72,16 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Thêm dữ liệu thành công!');
     }
     public function edit(Request $request){
-        $this->_authorization(34);
+        
         $compact['user'] = DB::table('users')->where('id', $request->user_id)->first();
         $compact['user_groups'] = DB::table('user_group')->get();
         return view('admin.user.edit', $compact);
     }
     public function update(Request $request){
-        $this->_authorization(34);
+        
         $user_group = explode( '_', $request->user_group );
+        dd( $this->_owner );
+        $this->_owner->arrange();
 
         $param['name']  = $request['user_name'];
         $param['email'] = $request['user_email'];
@@ -85,7 +98,7 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'Sửa dữ liệu thành công!');
     }
     public function delete(Request $request){
-        $this->_authorization(34);
+        
         DB::table('users')->where('id', $request->user_id)->delete();
         return redirect()->back()->with('success', 'Xoá dữ liệu thành công!');
     }

@@ -86,7 +86,6 @@
               <div class="card-filter">
 
               </div>
-
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -99,6 +98,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach($owners as $key => $value)
                         <tr>
                             <td>{{ $value->code }}</td>

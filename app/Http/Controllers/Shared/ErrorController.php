@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,8 +15,11 @@ use Validator,Response,File,Route;
 
 class ErrorController extends Controller
 {
+    function __constructor(){
+    }
+
     public function e404(Request $request){
-        dd("Bạn không có quyền truy cập");
+        return view('error.404');
     }
     
 }
