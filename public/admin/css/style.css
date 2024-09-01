@@ -1269,3 +1269,13 @@ h6 {
   background-color: #f5dfdf !important;
   border: 1px solid #f08c8c !important;
 }
+
+.search-group{
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.search-group-btn{
+  width: fit-content;
+}

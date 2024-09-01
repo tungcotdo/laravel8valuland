@@ -14,8 +14,8 @@
 <div class="card-btns">
   <a href="<?php echo e(route('admin.owner.form-upload-excel')); ?>" class="btn btn-sm btn-success"><i class="bi bi-upload"></i> Tải file excel</a>
   <a href="<?php echo e(route('admin.owner.add')); ?>" class="btn btn-sm btn-primary"><i class="bi bi-plus-lg"></i> Thêm mới</a>
-  <a href="<?php echo e(route('admin.owner.truncate')); ?>" onclick="return confirm('Bạn có muốn xóa hết dữ liệu không?')" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Xóa hết dữ liệu</a>
-  <!-- <a href="#" class="btn btn-sm btn-warning disabled"><i class="bi bi-download"></i> Xuất file excel</a> -->
+  <a href="<?php echo e(route('admin.owner.arrange')); ?>" class="btn btn-sm btn-warning"><i class="bi bi-arrow-repeat"></i> Sắp xếp</a>
+  <a href="<?php echo e(route('admin.owner.truncate')); ?>" onclick="return confirm('Bạn có muốn xóa hết dữ liệu không?')" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Xóa dữ liệu</a>
 </div>
 
 <!-- Filter -->
@@ -28,22 +28,30 @@
     </h2>
     <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
         <form class="row g-3" action="<?php echo e(route('admin.owner.index')); ?>">
-            <div class="col-md-3 validate">
+            <div class="col-md-2 validate">
                 <label for="code" class="form-label form-label-sm">Mã căn</label>
                 <input type="text" class="form-control form-control-sm" id="code" name="code" value="<?php echo e(request()->code); ?>">
                 <small class="error-message text-danger"></small>
             </div>
-            <div class="col-md-3 validate">
+            <div class="col-md-2 validate">
                 <label for="owner_name" class="form-label form-label-sm">Tên</label>
                 <input type="text" class="form-control form-control-sm" id="owner_name" name="owner_name" value="<?php echo e(request()->owner_name); ?>">
                 <small class="error-message text-danger"></small>
             </div>
-            <div class="col-md-3 validate">
+            <div class="col-md-2 validate">
                 <label for="owner_phone" class="form-label form-label-sm">Điện thoại</label>
                 <input type="text" class="form-control form-control-sm" id="owner_phone" name="owner_phone" value="<?php echo e(request()->owner_phone); ?>">
                 <small class="error-message text-danger"></small>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <label for="owner_demand" class="form-label form-label-sm">Phụ trách</label>
+                <select id="owner_demand" class="form-select form-select-sm w-100" name="owner_demand">
+                    <option value="0">Không có</option>
+                    <option value="1" <?php echo e(request()->owner_demand == 1 ? 'selected' : ''); ?>>Bán</option>
+                    <option value="2" <?php echo e(request()->owner_demand == 2 ? 'selected' : ''); ?>>Thuê</option>
+                </select>
+            </div>
+            <div class="col-md-2">
                 <label for="owner_demand" class="form-label form-label-sm">Nhu cầu</label>
                 <select id="owner_demand" class="form-select form-select-sm w-100" name="owner_demand">
                     <option value="0">Không có</option>
@@ -51,8 +59,8 @@
                     <option value="2" <?php echo e(request()->owner_demand == 2 ? 'selected' : ''); ?>>Thuê</option>
                 </select>
             </div>
-            <div class="col-12">
-                <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+            <div class="col-md-2 search-group">
+                <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
             </div>
         </form>
     </div>
@@ -72,7 +80,6 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-
               <div class="card-filter">
 
               </div>
@@ -83,6 +90,7 @@
                     <th scope="col" class="small">MÃ CĂN</th>
                     <th scope="col" class="small">TÊN</th>
                     <th scope="col" class="small">ĐIỆN THOẠI</th>
+                    <th scope="col" class="small">PHỤ TRÁCH</th>
                     <th scope="col" class="small">NHU CẦU</th>
                     <th scope="col" class="small">HÀNH ĐỘNG</th>
                   </tr>
@@ -91,8 +99,9 @@
                     <?php $__currentLoopData = $owners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td style="border-bottom: 1px solid #f3f3f3;"><?php echo e($value->code); ?></td>
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 300px; overflow-x: auto;"><?php echo e($value->owner_name); ?></td>
-                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 300px; overflow-x: auto;"><?php echo e($value->owner_phone); ?></td>
+                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;"><?php echo e($value->owner_name); ?></td>
+                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;"><?php echo e($value->owner_phone); ?></td>
+                            <td style="border-bottom: 1px solid #f3f3f3; max-width: 200px; overflow-x: auto;">Ngân</td>
                             <td style="border-bottom: 1px solid #f3f3f3; min-width: 100px;">
                                 <select class="form-control form-control-sm owner-demand-slb">
                                     <option value="0">Không có</option>
@@ -106,8 +115,6 @@
                             </td>
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-
                 </tbody>
               </table>
             </div>

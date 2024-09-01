@@ -43,6 +43,44 @@ class OwnerController extends Controller
         return view('admin.owner.add');
     }
 
+    public function arrange(Request $request){
+
+        $telesale_query = DB::table('users')->where('user_group_id', 3);
+
+        $telesale_number = $telesale_query->count();
+
+        $telesales = $telesale_query->get();
+
+        $owner_query = DB::table('owner');
+
+        $owners = DB::table('owner')->get();
+
+        $owner_number = $owner_query->count();
+
+        if( !empty( $telesale_number ) && !empty( $owner_number ) ){
+            $break = round( $owner_number / $telesale_number );
+
+            foreach( $telesales as $ktelesale => $vtelesale ){
+                $index = $ktelesale + 1;
+
+                if( $index == 2 ){
+                    $telesale_s = $index == 1 ? $index : (($index - 1) * $break);
+                    $telesale_e = $index * $break;
+                    DB::table('owner')
+                    ->whereBetween('owner_id', [$telesale_s, $telesale_e])
+                    ->update([
+                        'user_id' => $vtelesale->id
+                    ]);
+                }
+                
+
+            }
+        }
+
+        return redirect()->back()->with('success', $this->_message['update']);
+
+    }
+
     public function store(Request $request){
         $this->_authorization(3);
         DB::table('owner')->insert([
@@ -50,7 +88,7 @@ class OwnerController extends Controller
             'owner_phone' => $request['owner_phone'],
             'owner_email' => $request['owner_email'],
             'owner_demand' => $request['owner_demand'],
-            'code'  => $request['code'],
+            'code' => $request['code'],
             'owner_created_by'  => Auth::user()->email,
             'owner_updated_by'  => Auth::user()->email,
             'owner_created_at'  => Carbon::now(),

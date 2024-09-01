@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('owner')->group(function () {
             Route::get('index', ['as' => 'admin.owner.index', 'uses' => 'Admin\OwnerController@index']);
             Route::get('add', ['as' => 'admin.owner.add', 'uses' => 'Admin\OwnerController@add']);
+            Route::get('arrange', ['as' => 'admin.owner.arrange', 'uses' => 'Admin\OwnerController@arrange']);
             Route::post('store', ['as' => 'admin.owner.store', 'uses' => 'Admin\OwnerController@store']);
             Route::get('form-upload-excel', ['as' => 'admin.owner.form-upload-excel', 'uses' => 'Admin\OwnerController@formUploadExcel']);
             Route::post('upload-excel', ['as' => 'admin.owner.upload-excel', 'uses' => 'Admin\OwnerController@uploadExcel']);

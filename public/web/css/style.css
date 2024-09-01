@@ -1357,14 +1357,6 @@ header{
   justify-content: end;
 }
 
-.search-group-btn{
-  background-color: #3c86c5;
-}
-
-.search-group-btn:hover{
-  opacity: 0.8;
-}
-
 .main-navigation{
   display: flex;
   gap: 30px;
