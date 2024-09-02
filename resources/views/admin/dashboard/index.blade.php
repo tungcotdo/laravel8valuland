@@ -10,7 +10,7 @@
             </nav>
         </div><!-- End Page Title -->
 
-        @if( $_authorization(1) )
+        @if( $_authorization(1, true) )
             <section class="section dashboard">
                 <div class="row">
                     <form class="col-lg-12" method="POST">
@@ -260,21 +260,17 @@
                     <div class="card">
 
                         <div class="card-body">
-                        <h5 class="card-title">Vừa thông báo</h5>
-
-                        <div class="activity">
-                            @if( !empty( $notifications ) )
-                                @foreach( $notifications as $value )
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label small" style="width: 85px;">{{ \Carbon\Carbon::parse($value->notification_updated_at)->diffForHumans() }}</div>
-                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content small">
-                                        <b>{{ $value->notification_title }}</b> {{ $value->notification_content }}
-                                    </div>
-                                </div><!-- End activity item-->
-                                @endforeach
-                            @endif
-                        </div>
+                            <h5 class="card-title">Vừa thông báo</h5>
+                            <div class="activity">
+                                @if( !empty( $notifications ) )
+                                    @foreach( $notifications as $value )
+                                    <div class="activity-item mb-4">
+                                        <b>{{ $value->notification_title }}</b> {{ $value->notification_content }} <br>
+                                        <small class="text-secondary">{{ \Carbon\Carbon::parse($value->notification_updated_at)->diffForHumans() }}</small>
+                                    </div><!-- End activity item-->
+                                    @endforeach
+                                @endif
+                            </div>
 
                         </div>
                     </div><!-- End Recent Activity -->

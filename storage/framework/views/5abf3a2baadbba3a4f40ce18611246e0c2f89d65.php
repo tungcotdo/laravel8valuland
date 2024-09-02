@@ -94,10 +94,6 @@
                   submit: true
               }),
               Validator.tbRequired({
-                  selector: '#user_password',
-                  submit: true
-              }),
-              Validator.tbRequired({
                   selector: '#user_phone',
                   submit: true
               })

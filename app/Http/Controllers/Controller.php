@@ -42,7 +42,6 @@ class Controller extends BaseController
     }
 
     function __construct(){
-        
         $this->middleware(function ($request, $next) {
             $compact['_notification'] = DB::table('notification as n')
             ->leftjoin('notification_user as nu', 'n.notification_id', '=', 'nu.notification_id')

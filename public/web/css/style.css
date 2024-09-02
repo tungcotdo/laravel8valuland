@@ -1376,3 +1376,13 @@ header{
 .main-navigation-item--active{
   text-decoration: underline;
 }
+
+.search-group{
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.search-group-btn{
+  width: fit-content;
+}

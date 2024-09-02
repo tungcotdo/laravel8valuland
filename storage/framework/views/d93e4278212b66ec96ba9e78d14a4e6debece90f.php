@@ -10,7 +10,7 @@
             </nav>
         </div><!-- End Page Title -->
 
-        <?php if( $_authorization(1) ): ?>
+        <?php if( $_authorization(1, true) ): ?>
             <section class="section dashboard">
                 <div class="row">
                     <form class="col-lg-12" method="POST">
@@ -260,22 +260,17 @@
                     <div class="card">
 
                         <div class="card-body">
-                        <h5 class="card-title">Vừa thông báo</h5>
-
-                        <div class="activity">
-                            <?php if( !empty( $notifications ) ): ?>
-                                <?php $__currentLoopData = $notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="activity-item d-flex">
-                                    <div class="activite-label small" style="width: 85px;"><?php echo e(\Carbon\Carbon::parse($value->notification_updated_at)->diffForHumans()); ?></div>
-                                    <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                    <div class="activity-content small">
-                                        <b><?php echo e($value->notification_title); ?></b> <?php echo e($value->notification_content); ?>
-
-                                    </div>
-                                </div><!-- End activity item-->
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
-                        </div>
+                            <h5 class="card-title">Vừa thông báo</h5>
+                            <div class="activity">
+                                <?php if( !empty( $notifications ) ): ?>
+                                    <?php $__currentLoopData = $notifications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="activity-item mb-4">
+                                        <b><?php echo e($value->notification_title); ?></b> <?php echo e($value->notification_content); ?> <br>
+                                        <small class="text-secondary"><?php echo e(\Carbon\Carbon::parse($value->notification_updated_at)->diffForHumans()); ?></small>
+                                    </div><!-- End activity item-->
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                            </div>
 
                         </div>
                     </div><!-- End Recent Activity -->

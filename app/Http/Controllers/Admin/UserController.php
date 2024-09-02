@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\FileExport;
-use App\Imports\FileImport;
 use DB;
 use Carbon\Carbon;
 use Auth;
@@ -15,11 +13,8 @@ use App\Services\OwnerService;
 class UserController extends Controller
 {
 
-    private $_owner;
-
-    function __constructor(){
+    function __construct(){
         parent::__construct();
-        $this->_owner = new OwnerService();
     }
 
     public function index(Request $request){
@@ -56,8 +51,6 @@ class UserController extends Controller
         }
 
         $user_group = explode( '_', $request->user_group );
-
-        $this->_owner->arrange();
         
         DB::table('users')->insert([
             'name'  => $request['user_name'],
@@ -80,8 +73,6 @@ class UserController extends Controller
     public function update(Request $request){
         
         $user_group = explode( '_', $request->user_group );
-        dd( $this->_owner );
-        $this->_owner->arrange();
 
         $param['name']  = $request['user_name'];
         $param['email'] = $request['user_email'];

@@ -83,9 +83,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <div class="card-filter">
-
-              </div>
+              <p class="text-danger">Tổng số <b><?php echo e(count( $owners )); ?></b> bản ghi.</p>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -115,6 +113,7 @@
 
                             <td style="max-width: fit-content; overflow-x: auto;">
                               <select class="form-control form-control-sm owner-telesale-slb">
+                                <option value="<?php echo e(route('admin.owner.update-telesale', ['owner_id' => $value->owner_id, 'user_id' => 0])); ?>">Không có</option>
                                 <?php if( !empty( $telesales ) ): ?>
                                   <?php $__currentLoopData = $telesales; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $telesale): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e(route('admin.owner.update-telesale', ['owner_id' => $value->owner_id, 'user_id' => $telesale->id])); ?>" <?php echo e($value->user_id == $telesale->id ? 'selected' : ''); ?>><?php echo e($telesale->name); ?></option>

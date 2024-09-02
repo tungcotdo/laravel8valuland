@@ -19,14 +19,13 @@ class SaleController extends Controller
     private $_sale;
     private $_house;
 
-    function __constructor(){
+    function __construct(){
         parent::__construct();
         $this->_sale = new SaleService();
         $this->_house = new HouseService();
     }
 
     public function raw(Request $request){
-        $this->_authorization(6);
         $query = DB::table('sale')->where('sale_status', 1);
 
         if( !empty( $request->code ) ){

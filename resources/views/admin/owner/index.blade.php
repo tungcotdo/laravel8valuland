@@ -83,9 +83,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <div class="card-filter">
-
-              </div>
+              <p class="text-danger">Tổng số <b>{{ count( $owners ) }}</b> bản ghi.</p>
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -115,6 +113,7 @@
 
                             <td style="max-width: fit-content; overflow-x: auto;">
                               <select class="form-control form-control-sm owner-telesale-slb">
+                                <option value="{{route('admin.owner.update-telesale', ['owner_id' => $value->owner_id, 'user_id' => 0])}}">Không có</option>
                                 @if( !empty( $telesales ) )
                                   @foreach( $telesales as $key => $telesale )
                                     <option value="{{route('admin.owner.update-telesale', ['owner_id' => $value->owner_id, 'user_id' => $telesale->id])}}" {{ $value->user_id == $telesale->id ? 'selected' : '' }}>{{$telesale->name}}</option>

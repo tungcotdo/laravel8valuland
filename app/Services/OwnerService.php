@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Services;
-use Illuminate\Http\Request;
-use File;
 use DB;
 
 class OwnerService
@@ -22,18 +20,26 @@ class OwnerService
         $owner_number = $owner_query->count();
 
         if( !empty( $telesale_number ) && !empty( $owner_number ) ){
-            $break = round( $owner_number / $telesale_number );
+            $break = $owner_number / $telesale_number;
 
             foreach( $telesales as $ktelesale => $vtelesale ){
                 $index = $ktelesale + 1;
-                if( $index == 2 ){
-                    $telesale_s = $index == 1 ? $index : (($index - 1) * $break);
-                    $telesale_e = $index * $break;
-                    DB::table('owner')
-                    ->whereBetween('owner_id', [$telesale_s, $telesale_e])
-                    ->update([
-                        'user_id' => $vtelesale->id
-                    ]);
+
+                $telesale_s = ($index - 1) * $break;
+                $telesale_e = $index * $break;
+
+                // if( $index > 1 )
+                // dd($telesale_number, $owner_number, $break, $index, $telesale_s, $telesale_e);
+
+                foreach( $owners as $kowner => $vowner ){
+                    $kowner = $kowner + 1;
+                    if( $kowner > $telesale_s && $kowner <= $telesale_e ){
+                        DB::table('owner')
+                        ->where('owner_id', $vowner->owner_id)
+                        ->update([
+                            'user_id' => $vtelesale->id
+                        ]);
+                    }
                 }
             }
         }

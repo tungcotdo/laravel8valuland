@@ -95,11 +95,6 @@
                         <input type="text" class="form-control form-control-sm" id="owner_name" name="owner_name" value="<?php echo e($sale->owner_name); ?>">
                         <small class="error-message text-danger"></small>
                       </div>
-                      <!-- <div class="col-md-4 validate">
-                        <label for="owner_email" class="form-label-sm">Email chủ hộ (Ngăn cách bằng dấu ;)<small class="text-danger"> *</small></label>
-                        <input type="text" class="form-control form-control-sm" id="owner_email" name="owner_email" value="<?php echo e($sale->owner_email); ?>">
-                        <small class="error-message text-danger"></small>
-                      </div> -->
                       <div class="col-md-4 validate">
                         <label for="owner_phone" class="form-label-sm">Điện thoại chủ hộ <small class="text-danger"> *</small></label>
                         <input type="text" class="form-control form-control-sm" id="owner_phone" name="owner_phone" value="<?php echo e($sale->owner_phone); ?>">

@@ -8,7 +8,7 @@ Auth::routes(['register' => false]);
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/', function () {
-    return redirect()->route('web.sale.index');
+    return redirect()->route('web.sale.select');
 });
 
 Route::prefix('error')->group(function () {

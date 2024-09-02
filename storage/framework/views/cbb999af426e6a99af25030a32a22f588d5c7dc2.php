@@ -4,12 +4,11 @@
         <!-- Filter -->
         <div class="card">
             <div class="accordion-item p-3">
-                <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed py-2 bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        <i class="bi bi-filter-left"> Bộ lọc</i>
-                    </button>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
+                <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
+                    <div class="col-12">
+                        <h5>Bất động sản Vinhome Ocean Park</h5>
+                        <small>Hiện có <b>3</b> bất động sản.</small>
+                    </div>
                     <form class="row g-3" action="<?php echo e(route('admin.owner.index')); ?>">
                         <div class="col-4 col-md-2">
                             <label for="sale_building" class="form-label-sm label-filter">Tòa</label>
@@ -33,11 +32,7 @@
                             <input type="text" class="form-control form-control-sm" id="sale_navigable_area" name="sale_navigable_area">
                         </div>
                         <div class="col-4 col-md-2 search-group">
-                            <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
-                        </div>
-                        <div class="col-12">
-                            <h5>Bất động sản Vinhome Ocean Park</h5>
-                            <small>Hiện có <b>3</b> bất động sản.</small>
+                            <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                         </div>
                     </form>
                 </div>
