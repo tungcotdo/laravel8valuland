@@ -23,6 +23,8 @@ class OwnerController extends Controller
     }
 
     public function index(Request $request){
+        $this->_authorization('admin', 'owner', 'index');
+
         $query = DB::table('owner');
 
         if( !empty( $request->code ) ){
@@ -57,15 +59,18 @@ class OwnerController extends Controller
     }
 
     public function add(Request $request){
+        $this->_authorization('admin', 'owner', 'add');
         return view('admin.owner.add');
     }
 
     public function arrange(Request $request){
+        $this->_authorization('admin', 'owner', 'orrange');
         $this->_owner->arrange();
         return redirect()->back()->with('success', $this->_message['update']);
     }
 
     public function store(Request $request){
+        $this->_authorization('admin', 'owner', 'add');
         DB::table('owner')->insert([
             'owner_name'  => $request['owner_name'],
             'owner_phone' => $request['owner_phone'],
@@ -113,9 +118,11 @@ class OwnerController extends Controller
     }
     
     public function formUploadExcel(Request $request){
+        $this->_authorization('admin', 'owner', 'upload_excel');
         return view('admin.owner.upload-excel');
     }
     public function uploadExcel(Request $request){
+        $this->_authorization('admin', 'owner', 'upload_excel');
         if ( !$request->hasFile('owner_upload_excel') ) {
             return redirect()->back()->with('error', 'Chưa chọn file excel!');
         }
@@ -144,10 +151,12 @@ class OwnerController extends Controller
         return redirect()->back()->with('success', $this->_message['store']); 
     }
     public function edit(Request $request){
+        $this->_authorization('admin', 'owner', 'edit');
         $owner = DB::table('owner')->where('owner_id', $request->owner_id)->first();
         return view('admin.owner.edit', ['owner' => $owner]);
     }
     public function update(Request $request){
+        $this->_authorization('admin', 'owner', 'edit');
         DB::table('owner')->where('owner_id', $request->owner_id)->update([
             'owner_name'  => $request['owner_name'],
             'owner_phone' => $request['owner_phone'],
@@ -195,6 +204,7 @@ class OwnerController extends Controller
     }
 
     public function updateDemand(Request $request){
+        $this->_authorization('admin', 'owner', 'demand');
         $owner = (array)DB::table('owner')->where('owner_id', $request->owner_id)->first();
         DB::table('owner')->where('owner_id', $request->owner_id)->update([
             'owner_name'  => $owner['owner_name'],
@@ -238,6 +248,7 @@ class OwnerController extends Controller
     }
 
     public function updateTelesale(Request $request){
+        $this->_authorization('admin', 'owner', 'update_telesale');
         DB::table('owner')
         ->where('owner_id', $request->owner_id)
         ->update([
@@ -250,11 +261,13 @@ class OwnerController extends Controller
     }
 
     public function delete(Request $request){
+        $this->_authorization('admin', 'owner', 'delete');
         DB::table('owner')->where('owner_id',$request->owner_id)->delete();
         return redirect()->route('admin.owner.index')->with('success', $this->_message['delete']); 
     }
 
     public function truncate(Request $request){
+        $this->_authorization('admin', 'owner', 'truncate');
         DB::table('owner')->truncate();
         return redirect()->back()->with('success', $this->_message['delete']); 
     }

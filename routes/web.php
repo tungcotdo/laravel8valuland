@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('admin')->group(function () {
         Route::prefix('dashboard')->group(function () {
             Route::get('index', ['as' => 'admin.dashboard.index', 'uses' => 'Admin\DashboardController@index']);
+            Route::post('render', ['as' => 'admin.dashboard.render', 'uses' => 'Admin\DashboardController@render']);
         });
     
         // Owner

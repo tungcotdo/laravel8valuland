@@ -26,6 +26,8 @@ class SaleController extends Controller
     }
 
     public function raw(Request $request){
+        $this->_authorization('admin', 'sale', 'index');
+
         $query = DB::table('sale')->where('sale_status', 1);
 
         if( !empty( $request->code ) ){
@@ -49,7 +51,8 @@ class SaleController extends Controller
     }
     
     public function select(Request $request){
-        $this->_authorization(7);
+        $this->_authorization('admin', 'sale', 'select');
+
         $query = DB::table('sale')->where('sale_status', 2);
 
         if( !empty( $request->code ) ){
@@ -61,7 +64,8 @@ class SaleController extends Controller
     }
     
     public function sold(Request $request){
-        $this->_authorization(7);
+        $this->_authorization('admin', 'sale', 'sold');
+
         $query = DB::table('sale')->where('sale_status', 4);
 
         if( !empty( $request->code ) ){
@@ -73,11 +77,13 @@ class SaleController extends Controller
     }
     
     public function add(Request $request){
+        $this->_authorization('admin', 'sale', 'add');
         return view('admin.sale.add');
     }
 
     public function store(Request $request){
-        $this->_authorization(20);
+        $this->_authorization('admin', 'sale', 'add');
+
         $this->_sale->store($request);
 
         if( $request->sale_status == 1 ){
@@ -92,13 +98,13 @@ class SaleController extends Controller
     }
 
     public function edit(Request $request){
-        $this->_authorization(20);
+        $this->_authorization('admin', 'sale', 'edit');
         $sale = DB::table('sale')->where('sale_id', $request->sale_id)->first();
         return view('admin.sale.edit', ['sale' => $sale, 'house' => $this->_house]);
     }
 
     public function update(Request $request){
-        $this->_authorization(20);
+        $this->_authorization('admin', 'sale', 'edit');
         $this->_sale->update($request);
 
         if( $request->sale_status == 1 ){
@@ -113,13 +119,13 @@ class SaleController extends Controller
     }
 
     public function delete(Request $request){
-        $this->_authorization(21);
+        $this->_authorization('admin', 'sale', 'delete');
         DB::table('sale')->where('sale_id',$request->sale_id)->delete();
         return redirect()->back()->with('success', 'Xoá dữ liệu thành công!'); 
     }
 
     public function status(Request $request){
-        $this->_authorization(20);
+        $this->_authorization('admin', 'sale', 'status');
         DB::table('sale')->where('sale_id', $request->sale_id)->update([
             'sale_status' => $request->sale_status
         ]);
