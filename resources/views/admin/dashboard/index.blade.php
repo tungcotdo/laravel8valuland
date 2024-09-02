@@ -1,13 +1,7 @@
 @extends('layouts.admin')
 @section('admin.main')
         <div class="pagetitle">
-            <h1>Thống kê số liệu</h1>
-            <nav>
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{route('admin.dashboard.index')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Thống kê</li>
-                </ol>
-            </nav>
+            <h1>Trang chủ</h1>
         </div><!-- End Page Title -->
 
         @if( $_authorization('admin', 'dashboard', 'index', true) )
@@ -41,12 +35,15 @@
     // render
     const formData = new FormData();
     formData.append("_token", document.querySelector("#csrf-token").content);
-    fetchAPI(document.getElementById('dashboard-render-url').value, formData);
+    const urlElement = document.getElementById('dashboard-render-url');
 
-    // update after 5s
-    setInterval(function(){
-        fetchAPI(document.getElementById('dashboard-render-url').value, formData);
-    }, 5000);
+    if( urlElement ){
+        fetchAPI(urlElement.value, formData);
 
+        // update after 5s
+        setInterval(function(){
+            fetchAPI(urlElement.value, formData);
+        }, 5000);
+    }
   </script>
 @endsection
