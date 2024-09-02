@@ -66,10 +66,18 @@ class SaleController extends Controller
     public function sold(Request $request){
         $this->_authorization('admin', 'sale', 'sold');
 
-        $query = DB::table('sale')->where('sale_status', 4);
+        $query = DB::table('sale')->whereIn('sale_status', [4, 5]);
 
         if( !empty( $request->code ) ){
             $query->where( 'code', 'LIKE', '%'.$request->code.'%' );
+        }
+
+        if( !empty( $request->sale_style ) ){
+            $query->where( 'sale_style', 'LIKE', '%'.$request->sale_style.'%' );
+        }
+
+        if( !empty( $request->sale_status ) ){
+            $query->where( 'sale_status', 'LIKE', '%'.$request->sale_status.'%' );
         }
 
         $sale_solds = $query->get();
@@ -120,7 +128,10 @@ class SaleController extends Controller
 
     public function delete(Request $request){
         $this->_authorization('admin', 'sale', 'delete');
+
+        File::deleteDirectory($this->_getuploadpath('sale', $request->sale_id));
         DB::table('sale')->where('sale_id',$request->sale_id)->delete();
+
         return redirect()->back()->with('success', 'Xoá dữ liệu thành công!'); 
     }
 

@@ -29,6 +29,11 @@ class Controller extends BaseController
         'delete' => 'Xóa dữ liệu thành công'
     ];
 
+    public function _getuploadpath($folder, $id, $ds_last = false){
+        $DS = '/';
+        return 'upload' . $DS . $folder . $DS. $id . ( $ds_last ? $DS : '' );
+    }
+
     public function _authorization($function_group, $function_controller, $function_action, $view = false){
         $function = DB::table('function')->where([
             'function_group' => $function_group,
@@ -67,6 +72,10 @@ class Controller extends BaseController
 
             $compact['_authorization'] = function($function_group, $function_controller, $function_action, $view = false){
                 return $this->_authorization($function_group, $function_controller, $function_action,  $view);
+            };
+
+            $compact['_getuploadpath'] = function( $folder, $id){
+                return $this->_getuploadpath($folder, $id);
             };
 
             View::share($compact);

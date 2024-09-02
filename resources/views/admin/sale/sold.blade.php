@@ -19,15 +19,16 @@
             </button>
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
-            <form class="row g-3" action="{{route('admin.sale.select')}}">
-                <div class="col-md-3 validate">
+            <form class="row g-3" action="{{route('admin.sale.sold')}}">
+                <div class="col-md-2 validate">
                     <label for="code" class="form-label-sm">Mã căn</label>
                     <input type="text" class="form-control form-control-sm" id="code" name="code" value="{{request()->code}}">
                     <small class="error-message text-danger"></small>
                 </div>
-                <div class="col-md-3 validate">
+                <div class="col-md-2 validate">
                     <label for="sale_style" class="form-label-sm">Loại căn hộ</label>
                     <select class="form-control form-control-sm" id="sale_style" name="sale_style">
+                      <option value="0">--Chọn--</option>
                       @if( !empty( $house->_STYLE ) )
                         @foreach( $house->_STYLE as $value => $text )
                           <option value="{{ $value }}" {{ $value == request()->sale_style ? 'selected' : '' }}>{{ $text }}</option>
@@ -36,13 +37,17 @@
                     </select>
                     <small class="error-message text-danger"></small>
                 </div>
-                <div class="col-md-3 validate">
-                    <label for="owner_phone" class="form-label-sm">Điện thoại</label>
-                    <input type="text" class="form-control form-control-sm" id="owner_phone" name="owner_phone" value="{{request()->owner_phone}}">
+                <div class="col-md-2 validate">
+                    <label for="sale_status" class="form-label-sm">Trạng thái</label>
+                    <select id="sale_status" class="form-control form-control-sm" name="sale_status">
+                        <option value="0">--Chọn--</option>
+                        <option {{ request()->sale_status == 5 ? 'selected' : '' }} value="5" >Mình đã bán</option>
+                        <option {{ request()->sale_status == 4 ? 'selected' : '' }} value="4">Họ đã bán</option>
+                    </select>
                     <small class="error-message text-danger"></small>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                <div class="col-md-2 search-group">
+                    <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                 </div>
             </form>
           </div>
@@ -89,10 +94,14 @@
                                     <td>{{ $value->sale_price }}</td>
                                     <td>{{\Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $value->sale_updated_at)->format('H:m - d/m/Y')}}</td>
                                     <td>
-                                      <span class="badge bg-secondary">Đã bán</span>
+                                      @if( $value->sale_status == 5 )
+                                        <span class="badge bg-success">Mình đã bán</span>
+                                      @endif
+                                      @if( $value->sale_status == 4 )
+                                        <span class="badge bg-secondary">Họ đã bán</span>
+                                      @endif
                                     </td>
                                     <td>
-                                      <a href="{{route('admin.sale.status', ['sale_id' => $value->sale_id, 'sale_status'=> 3])}}" class="btn btn-sm btn-success"><i class="bi bi-cursor small"> Giao dịch</i></a>
                                       <a href="{{route('admin.sale.edit', ['sale_id' => $value->sale_id, 'sale_status' => 2])}}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square small"> Sửa</i></a>
                                     </td>
                                 </tr>

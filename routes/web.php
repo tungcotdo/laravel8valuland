@@ -29,15 +29,15 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::prefix('shared')->group(function () {
         Route::prefix('saleimg')->group(function () {
-            Route::post('render/{sale_id}', ['as' => 'shared.saleimg.render', 'uses' => 'Admin\SaleimgController@render']);
-            Route::post('upload/{sale_id}', ['as' => 'shared.saleimg.upload', 'uses' => 'Admin\SaleimgController@upload']);
-            Route::post('delete/{sale_img_id}', ['as' => 'shared.saleimg.delete', 'uses' => 'Admin\SaleimgController@delete']);
+            Route::post('render/{sale_id}', ['as' => 'shared.saleimg.render', 'uses' => 'Shared\SaleimgController@render']);
+            Route::post('upload/{sale_id}', ['as' => 'shared.saleimg.upload', 'uses' => 'Shared\SaleimgController@upload']);
+            Route::post('delete/{sale_img_id}', ['as' => 'shared.saleimg.delete', 'uses' => 'Shared\SaleimgController@delete']);
         });
     
         Route::prefix('salevideo')->group(function () {
-            Route::post('render/{sale_id}', ['as' => 'shared.salevideo.render', 'uses' => 'Admin\SalevideoController@render']);
-            Route::post('upload/{sale_id}', ['as' => 'shared.salevideo.upload', 'uses' => 'Admin\SalevideoController@upload']);
-            Route::post('delete/{sale_id}', ['as' => 'shared.salevideo.delete', 'uses' => 'Admin\SalevideoController@delete']);
+            Route::post('render/{sale_id}', ['as' => 'shared.salevideo.render', 'uses' => 'Shared\SalevideoController@render']);
+            Route::post('upload/{sale_id}', ['as' => 'shared.salevideo.upload', 'uses' => 'Shared\SalevideoController@upload']);
+            Route::post('delete/{sale_id}', ['as' => 'shared.salevideo.delete', 'uses' => 'Shared\SalevideoController@delete']);
         });
     });
     

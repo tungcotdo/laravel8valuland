@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,14 +15,15 @@ use App\Services\UploadService;
 class SaleimgController extends Controller
 {
     private $_upload;
+    
 
-    function __constructor(){
+    function __construct(){
         parent::__construct();
         $this->_upload = new UploadService();
     }
 
     function viewIMG( $sale_id ){
-        $imgs = DB::table('sale_img')->where('sale_id', $request->sale_id)->get();
+        $imgs = DB::table('sale_img')->where('sale_id', $sale_id)->get();
         return view('admin.partials.sale_img', ['imgs' => $imgs])->render();
     }
 
@@ -32,9 +33,9 @@ class SaleimgController extends Controller
 
     public function upload(Request $request){
         $this->_upload->many([
-            'file' => $request->file('files'),
-            'uploadpath' => 'sale' . '/' . $request->sale_id  . '/',
-            'callback' => function( $path ){
+            'files' => $request->file('files'),
+            'uploadpath' => $this->_getuploadpath('sale', $request->sale_id, true),
+            'callback' => function( $path, $request ){
                 DB::table('sale_img')->insert([
                     'sale_id' => $request->sale_id,
                     'sale_img_path' => $path,
@@ -42,7 +43,7 @@ class SaleimgController extends Controller
                     'sale_img_updated_at'  => Carbon::now()
                 ]);
             }          
-        ]);
+        ], $request);
         return Response()->json(["success" => true, "template" => $this->viewIMG($request->sale_id)]);
     }
 

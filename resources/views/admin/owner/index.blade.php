@@ -44,14 +44,6 @@
                 <small class="error-message text-danger"></small>
             </div>
             <div class="col-md-2">
-                <label for="owner_demand" class="form-label form-label-sm">Nhu cầu</label>
-                <select id="owner_demand" class="form-select form-select-sm w-100" name="owner_demand">
-                    <option value="0">Không có</option>
-                    <option value="1" {{ request()->owner_demand == 1 ? 'selected' : '' }}>Bán</option>
-                    <option value="2" {{ request()->owner_demand == 2 ? 'selected' : '' }}>Thuê</option>
-                </select>
-            </div>
-            <div class="col-md-2">
                 <label for="owner_telesale" class="form-label form-label-sm">Telesale</label>
                 <select id="owner_telesale" class="form-select form-select-sm w-100" name="owner_telesale">
                     <option value="0">Không có</option>
@@ -113,7 +105,7 @@
 
                             <td style="max-width: fit-content; overflow-x: auto;">
                               <select class="form-control form-control-sm owner-telesale-slb">
-                                <option value="{{route('admin.owner.update-telesale', ['owner_id' => $value->owner_id, 'user_id' => 0])}}">Không có</option>
+                                <option value="0">Không có</option>
                                 @if( !empty( $telesales ) )
                                   @foreach( $telesales as $key => $telesale )
                                     <option value="{{route('admin.owner.update-telesale', ['owner_id' => $value->owner_id, 'user_id' => $telesale->id])}}" {{ $value->user_id == $telesale->id ? 'selected' : '' }}>{{$telesale->name}}</option>
@@ -146,12 +138,14 @@
   <script>
       let ownerUpdate = document.querySelectorAll('.owner-demand-slb, .owner-telesale-slb');
         ownerUpdate.forEach( slb => {
+            
+          slb.addEventListener('change', () => {
             if( slb.value !== 0 ){
-                slb.addEventListener('change', () => {
-                    document.getElementById("modal__loading").style.display = "block";
-                    window.location.href = slb.value
-                }) 
-            }   
+              document.getElementById("modal__loading").style.display = "block";
+              window.location.href = slb.value
+            }  
+          }) 
+             
         })
   </script>
 @endsection

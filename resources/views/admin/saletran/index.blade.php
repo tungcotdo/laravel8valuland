@@ -19,24 +19,13 @@
             </button>
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
-            <form class="row g-3" action="{{route('admin.sale.select')}}">
-                <div class="col-md-3 validate">
+          <form class="row g-3" action="{{route('admin.saletran.index')}}">
+                <div class="col-md-2">
                     <label for="code" class="form-label-sm">Mã căn</label>
                     <input type="text" class="form-control form-control-sm" id="code" name="code" value="{{request()->code}}">
-                    <small class="error-message text-danger"></small>
                 </div>
-                <div class="col-md-3 validate">
-                    <label for="owner_name" class="form-label-sm">Tên</label>
-                    <input type="text" class="form-control form-control-sm" id="owner_name" name="owner_name" value="{{request()->owner_name}}">
-                    <small class="error-message text-danger"></small>
-                </div>
-                <div class="col-md-3 validate">
-                    <label for="owner_phone" class="form-label-sm">Điện thoại</label>
-                    <input type="text" class="form-control form-control-sm" id="owner_phone" name="owner_phone" value="{{request()->owner_phone}}">
-                    <small class="error-message text-danger"></small>
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                <div class="col-md-2 search-group">
+                    <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                 </div>
             </form>
           </div>
@@ -67,6 +56,7 @@
                           <th scope="col" class="small">GIÁ</th>
                           <th scope="col" class="small">NGƯỜI LÀM PHÁP LÝ</th>
                           <th scope="col" class="small">HỢP ĐỒNG</th>
+                          <th scope="col" class="small">TRẠNG THÁI</th>
                           <th scope="col" class="small">HÀNH ĐỘNG</th>
                         </tr>
                       </thead>
@@ -86,8 +76,13 @@
                                     @else
                                       <td>Chưa có</td>
                                     @endif
-
-                                    
+                                    <td style="min-width: 120px;">
+                                        <select class="form-control form-control-sm sale-status-slb">
+                                            <option value="0">Giao dịch</option>
+                                            <option {{ $value->sale_status == 1 ? 'selected' : '' }} value="{{route('admin.sale.status', ['sale_id' => $value->sale_id, 'sale_status'=> 5])}}" >Mình đã bán</option>
+                                            <option {{ $value->sale_status == 2 ? 'selected' : '' }} value="{{route('admin.sale.status', ['sale_id' => $value->sale_id, 'sale_status'=> 4])}}">Họ đã bán</option>
+                                        </select>
+                                    </td>
                                     <td>
                                       <a href="{{route('admin.saletran.edit', $value->sale_id)}}" class="btn btn-sm btn-warning"><i class="bi bi-pencil-square small"> Sửa</i></a>
                                       <a onclick="return confirm('Bạn có muốn dữ liệu không?')" href="{{route('admin.sale.delete', $value->sale_id)}}" class="btn btn-sm btn-danger"><i class="bi bi-trash small"> Xóa</i></a>
@@ -121,4 +116,18 @@
 
         </div>
       </section>
+@endsection
+
+@section('admin.script')
+  <script>
+      let ownerUpdate = document.querySelectorAll('.sale-status-slb');
+        ownerUpdate.forEach( slb => {
+            slb.addEventListener('change', () => {
+              if( slb.value !== 0 ){
+                document.getElementById("modal__loading").style.display = "block";
+                window.location.href = slb.value
+              } 
+            }) 
+        })
+  </script>
 @endsection

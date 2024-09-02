@@ -4,6 +4,8 @@ namespace App\Services;
 use Illuminate\Http\Request;
 use File;
 use DB;
+use Auth;
+use Carbon\Carbon;
 
 class SaleService
 {

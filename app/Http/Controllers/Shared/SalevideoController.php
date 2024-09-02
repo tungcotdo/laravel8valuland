@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class SalevideoController extends Controller
 {
     private $_upload;
 
-    function __constructor(){
+    function __construct(){
         parent::__construct();
         $this->_upload = new UploadService();
     }
@@ -34,13 +34,13 @@ class SalevideoController extends Controller
     public function upload(Request $request){
         $this->_upload->one([
             'file' => $request->file('file'),
-            'uploadpath' => 'sale' . '/' . $request->sale_id  . '/' . 'video' . '/',
-            'callback' => function( $path ){
+            'uploadpath' => $this->_getuploadpath('sale', $request->sale_id),
+            'callback' => function( $path, $request ){
                 DB::table('sale')
                 ->where('sale_id', $request->sale_id)
                 ->update(['sale_video_path' => $path]);
             }          
-        ]);
+        ], $request);
 
         return Response()->json(["success" => true, "template" => $this->viewVideo($request->sale_id)]);
     }

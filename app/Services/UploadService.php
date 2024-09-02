@@ -6,59 +6,28 @@ use File;
 
 class UploadService
 {
-
-    private $_UPLOAD_PATH = 'upload';
-
-    public function one($param){
-        try{
-            $file = $request->file($param['filename']);
-
-            $file_name = rand().'.'.$file->extension();
-                
-            $upload_path = $this->_UPLOAD_PATH. '/'. $param['uploadpath']  . '/';
+    private function upload($file, $param, $request){
+        $file_name = rand().'.'.$file->extension();
             
-            $file->move($upload_path, $file_name);
+        $file->move($param['uploadpath'], $file_name);
 
-            if( !empty( $param['delpath'] ) ){
-                File::delete($param['delpath']);
-            }
-
-            if( !empty( $param['callback'] ) ){
-                $param['callback']($upload_path . $file_name);
-            }
-
-            return true;
+        if( !empty( $param['delpath'] ) ){
+            File::delete($param['delpath']);
         }
-        catch(Exception $e){
-            return false;
+
+        if( !empty( $param['callback'] ) ){
+            $param['callback']($param['uploadpath'] . $file_name, $request);
         }
     }
 
-    public function many($param){
-        try{
-            $files = $request->file($param['filename']);
+    public function one($param, $request){
+        $this->upload( $param['file'],  $param, $request);
+    }
 
-            foreach( $files as $key => $file ){
-                $file_name = rand().'.'.$file->extension();
-                    
-                $upload_path = $this->_UPLOAD_PATH. '/'. $param['uploadpath']  . '/';
-                
-                $file->move($upload_path, $file_name);
-    
-                if( !empty( $param['delpath'] ) ){
-                    File::delete($param['delpath']);
-                }
-
-                if( !empty( $param['callback'] ) ){
-                    $param['callback']($upload_path . $file_name);
-                }
-            }
-
-            return true;
-            
-        }
-        catch(Exception $e){
-            return false;
+    public function many($param, $request){
+        $files = $param['files'];
+        foreach( $files as $key => $file ){
+            $this->upload( $file,  $param, $request);
         }
     }
 

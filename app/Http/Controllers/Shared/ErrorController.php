@@ -15,7 +15,7 @@ use Validator,Response,File,Route;
 
 class ErrorController extends Controller
 {
-    function __constructor(){
+    function __construct(){
     }
 
     public function e404(Request $request){
