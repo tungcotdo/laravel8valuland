@@ -17,16 +17,16 @@ use Validator,Response,File, Route;
 class ContractController extends Controller
 {
     public function index(Request $request){
-        $this->_authorization(30);
+        $this->_authorization('admin', 'contract', 'index');
         $compact['contracts'] = DB::table('contract')->get();
         return view('admin.contract.index', $compact);
     }
     public function add(Request $request){
-        $this->_authorization(30);
+        $this->_authorization('admin', 'contract', 'add');
         return view('admin.contract.add');
     }
     public function store(Request $request){
-        $this->_authorization(30);
+        $this->_authorization('admin', 'contract', 'add');
         try{
             $file = $request->file('contract_file');
 
@@ -55,12 +55,12 @@ class ContractController extends Controller
 
     }
     public function edit(Request $request){
-        $this->_authorization(30);
+        $this->_authorization('admin', 'contract', 'edit');
         $compact['contract'] = DB::table('contract')->where('contract_id', $request->contract_id)->first();
         return view('admin.contract.edit', $compact);
     }
     public function update(Request $request){
-        $this->_authorization(30);
+        $this->_authorization('admin', 'contract', 'edit');
         try{
             $file = $request->file('contract_file');
             $contract_path = $request->contract_file_text;
@@ -90,7 +90,7 @@ class ContractController extends Controller
         }
     }
     public function delete(Request $request){
-        $this->_authorization(30);
+        $this->_authorization('admin', 'contract', 'delete');
         $contract = DB::table('contract')->where('contract_id', $request->contract_id)->first();
         DB::table('contract')->where('contract_id', $request->contract_id)->delete();
         File::delete($contract->contract_path);

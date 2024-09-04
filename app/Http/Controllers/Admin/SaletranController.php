@@ -23,11 +23,11 @@ class SaletranController extends Controller
         parent::__construct();
         $this->_upload = new UploadService();
         $this->_house  = new HouseService();
+        
     }
 
     public function index(Request $request){
         $this->_authorization('admin', 'sale', 'transaction');
-
         $query = DB::table('sale')->where('sale_status', 3);
 
         if( !empty( $request->code ) ){
@@ -52,14 +52,12 @@ class SaletranController extends Controller
 
     public function edit(Request $request){
         $this->_authorization('admin', 'sale', 'transaction');
-
         $sale = DB::table('sale')->where('sale_id', $request->sale_id)->first();
         return view('admin.saletran.edit', ['sale' => $sale, 'house' =>  $this->_house]);
     }
 
     public function update(Request $request){
         $this->_authorization('admin', 'sale', 'transaction');
-
         if( !empty( $request->file('sale_contract_img') ) ){
             $this->_upload->one([
                 'file' => $request->file('sale_contract_img'),

@@ -28,16 +28,14 @@ class OwnerService
                 $telesale_s = ($index - 1) * $break;
                 $telesale_e = $index * $break;
 
-                // if( $index > 1 )
-                // dd($telesale_number, $owner_number, $break, $index, $telesale_s, $telesale_e);
-
                 foreach( $owners as $kowner => $vowner ){
                     $kowner = $kowner + 1;
                     if( $kowner > $telesale_s && $kowner <= $telesale_e ){
                         DB::table('owner')
                         ->where('owner_id', $vowner->owner_id)
                         ->update([
-                            'user_id' => $vtelesale->id
+                            'user_id' => $vtelesale->id,
+                            'owner_demand' => 0
                         ]);
                     }
                 }

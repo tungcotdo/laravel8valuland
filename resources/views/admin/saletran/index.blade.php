@@ -45,6 +45,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
+                    <p class="text-danger">Tổng số <b>{{ count( $sale_transactions ) }}</b> bản ghi.</p>
                     <table class="table table-bordered">
                       <thead>
                         <tr>

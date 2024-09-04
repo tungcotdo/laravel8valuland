@@ -224,8 +224,6 @@
 
     </ul>
   </li><!-- End Authorized nav -->
-  
-
 </ul>
 
 </aside><?php /**PATH C:\xampp\htdocs\laravel8valuland\resources\views/admin/partials/sidebar.blade.php ENDPATH**/ ?>

@@ -26,13 +26,8 @@
                         <input type="text" class="form-control form-control-sm" id="notification_title" name="notification_title" value="{{request()->notification_title}}">
                         <small class="error-message text-danger"></small>
                     </div>
-                    <div class="col-md-3 validate">
-                        <label for="code" class="form-label form-label-sm">Tiêu đề</label>
-                        <input type="text" class="form-control form-control-sm" id="notification_content" name="notification_content" value="{{request()->notification_content}}">
-                        <small class="error-message text-danger"></small>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                    <div class="col-md-2 search-group">
+                        <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                     </div>
                 </form>
             </div>

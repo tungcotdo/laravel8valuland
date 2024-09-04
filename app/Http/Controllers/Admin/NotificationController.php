@@ -16,7 +16,7 @@ class NotificationController extends Controller
 
 
     public function index(Request $request){
-        $this->_authorization(12);
+        $this->_authorization('admin', 'notification', 'index');
         $query = DB::table('notification');
 
         if( !empty( $request->notification_title ) ){
@@ -31,7 +31,7 @@ class NotificationController extends Controller
         return view('admin.notification.index', $compact);
     }
     public function send(Request $request){
-        $this->_authorization(14);
+        $this->_authorization('admin', 'notification', 'send');
         $notification = DB::table('notification')->where('notification_id', $request->notification_id)->first();
 
         if( !empty( $notification->notification_user_group_id ) ){
@@ -66,11 +66,12 @@ class NotificationController extends Controller
     }
 
     public function add(Request $request){
+        $this->_authorization('admin', 'notification', 'add');
         $compact['user_groups'] = DB::table('user_group')->get();
         return view('admin.notification.add', $compact);
     }
     public function store(Request $request){
-        $this->_authorization(13);
+        $this->_authorization('admin', 'notification', 'add');
         $notification_user = $request->notification_user;
 
         $notification_user_group_id= array_keys($notification_user);
@@ -104,7 +105,7 @@ class NotificationController extends Controller
         return redirect()->back()->with('success', 'Thêm dữ liệu thành công!');
     }
     public function edit(Request $request){
-        $this->_authorization(14);
+        $this->_authorization('admin', 'notification', 'edit');
         $compact['notification'] = DB::table('notification')->where('notification_id', $request->notification_id)->first();
         if( !empty( $compact['notification'] ) ){
             $compact['notification_user'] = explode(',', $compact['notification']->notification_user_group_id);
@@ -123,7 +124,7 @@ class NotificationController extends Controller
         return view('admin.notification.view', $compact);
     }
     public function update(Request $request){
-        $this->_authorization(14);
+        $this->_authorization('admin', 'notification', 'edit');
         $notification_user = $request->notification_user;
 
         $notification_user_group_id= array_keys($notification_user);
@@ -163,7 +164,7 @@ class NotificationController extends Controller
         return redirect()->back()->with('success', 'Cập nhật dữ liệu thành công!');
     }
     public function delete(Request $request){
-        $this->_authorization(25);
+        $this->_authorization('admin', 'notification', 'delete');
         DB::table('notification')->where('notification_id', $request->notification_id)->delete();
         DB::table('notification_user')->where('notification_id', $request->notification_id)->delete();
         return redirect()->back()->with('success', 'Xoá dữ liệu thành công!'); 

@@ -123,6 +123,14 @@ class SaleController extends Controller
             return redirect()->route('admin.sale.select')->with('success', $this->_message['update']);
         }
 
+        if( $request->sale_status == 3 ){
+            return redirect()->route('admin.saletran.index')->with('success', $this->_message['update']);
+        }
+
+        if( in_array( $request->sale_status, [4,5] ) ){
+            return redirect()->route('admin.sale.sold')->with('success', $this->_message['update']);
+        }
+
         return redirect()->back()->with('success', $this->_message['update']);
     }
 

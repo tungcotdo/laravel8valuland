@@ -48,7 +48,6 @@
                         <tr>
                           <th scope="col">Nhóm</th>
                           <th scope="col">Tên</th>
-                          <th scope="col">Hành động</th>
                           <th scope="col">Chọn</th>
                         </tr>
                       </thead>
@@ -58,8 +57,6 @@
                               <tr>
                                   <td><?php echo e($value->function_group); ?></td>
                                   <td><?php echo e($value->function_desc); ?></td>
-                                  <td><?php echo e($value->function_action); ?></td>
-                                 
                                   <td>
                                     <?php
                                     $checked = '';

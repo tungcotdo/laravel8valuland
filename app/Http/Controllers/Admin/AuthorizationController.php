@@ -14,16 +14,17 @@ use Auth;
 class AuthorizationController extends Controller
 {
     public function index(Request $request){
-        $this->_authorization(26);
+        $this->_authorization('admin', 'user', 'index');
         $compact['user_groups'] = DB::table('user_group')->get();
         return view('admin.authorization.index', $compact);
     }
     public function add(Request $request){
+        $this->_authorization('admin', 'user', 'add');
         $compact['functions'] = DB::table('function')->get();
         return view('admin.authorization.add', $compact);
     }
     public function store(Request $request){
-        $this->_authorization(26);
+        $this->_authorization('admin', 'user', 'add');
         $user_group_id = DB::table('user_group')->insertGetId([
             'user_group_name'  => $request['user_group_name'],
             'user_group_description' => $request['user_group_description'],
@@ -41,7 +42,7 @@ class AuthorizationController extends Controller
         return redirect()->back()->with('success', 'Thêm dữ liệu thành công!');
     }
     public function edit(Request $request){
-        $this->_authorization(26);
+        $this->_authorization('admin', 'user', 'edit');
         $compact['user_group'] = DB::table('user_group')->where('user_group_id', $request->authorization_id)->first();
         $compact['functions'] = DB::table('function')->orderBy('function_group')->get();
         $user_group_function = DB::table('user_group_function')->where('user_group_id', $request->authorization_id)->first();
@@ -51,7 +52,7 @@ class AuthorizationController extends Controller
         return view('admin.authorization.edit', $compact);
     }
     public function update(Request $request){
-        $this->_authorization(26);
+        $this->_authorization('admin', 'user', 'edit');
         DB::table('user_group')->where('user_group_id', $request->authorization_id)->update([
             'user_group_name'  => $request['user_group_name'],
             'user_group_description' => $request['user_group_description'],
@@ -70,7 +71,7 @@ class AuthorizationController extends Controller
         return redirect()->back()->with('success', 'Cập nhật dữ liệu thành công!');
     }
     public function delete(Request $request){
-        $this->_authorization(26);
+        $this->_authorization('admin', 'user', 'delete');
         DB::table('user_group_function')->where('user_group_id', $request->authorization_id)->delete();
         DB::table('user_group')->where('user_group_id', $request->authorization_id)->delete();
         return redirect()->back()->with('success', 'Xoá dữ liệu thành công!');
