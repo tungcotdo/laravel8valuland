@@ -1292,6 +1292,10 @@ h6 {
   grid-area: salegriditem4;
 }
 
+.sale-card{
+  height: 300px;
+}
+
 .sale-card-grid{
   display: grid;
   grid-template-areas:

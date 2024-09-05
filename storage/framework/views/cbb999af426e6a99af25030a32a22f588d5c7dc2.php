@@ -37,14 +37,14 @@
                         <label for="sale_direction" class="form-label-sm">Hướng</label>
                         <select class="form-control form-control-sm" id="sale_direction" name="sale_direction">
                             <?php if( !empty( $house->_DIRECTION ) ): ?>
-                            <?php $__currentLoopData = $house->_DIRECTION; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value => $text): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($value); ?>" <?php echo e($value == request()->sale_direction ? 'selected' : ''); ?>><?php echo e($text); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $house->_DIRECTION; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value => $text): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($value); ?>" <?php echo e($value == request()->sale_direction ? 'selected' : ''); ?>><?php echo e($text); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
                         </select>
                         </div>
-                        <div class="col-12">
-                            <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                        <div class="col-md-2 search-group">
+                            <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                         </div>
                     </form>
                 </div>
@@ -60,13 +60,19 @@
                     <?php $__currentLoopData = $sale_selects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <a class="sale-card d-block my-2" href="<?php echo e(route('web.sale.detail', $value->sale_id)); ?>">
                         <div class="sale-card-grid">
-                            <?php $__currentLoopData = $sale_imgs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sale_img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php if( $sale_img->sale_id == $value->sale_id ): ?>
-                                    <div class="sale-grid-item sale-grid--item1">
-                                        <img class="sale-grid-img" src="<?php echo e(asset($sale_img->sale_img_path)); ?>" alt="">
-                                    </div>
-                                <?php endif; ?>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                if( !empty( $sale_imgs($value->sale_id) ) ){
+                                    $imgs = $sale_imgs($value->sale_id);
+                                    dd( $imgs[0]->sale_img_path );
+                                }
+                            ?>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-4">
+                            </div>
                         </div>
                         <div class="product d-flex flex-column" style="gap: 30px;">
                             <div class="card rounded-0">
@@ -74,7 +80,7 @@
                                     <div class="d-flex sale-house-info">
                                         <span class="sale-house-info-item text-dark mr-3"><?php echo e($value->sale_building); ?>.<?php echo e($value->sale_floor); ?><?php echo e($value->code); ?></span>
                                         <span class="sale-house-info-item text-danger mr-3"><?php echo e($value->sale_navigable_area); ?>m<sup>2</sup></span>
-                                        <span class="sale-house-info-item text-dark mr-3"><?php echo e($value->sale_style); ?></span>
+                                        <span class="sale-house-info-item text-dark mr-3"><?php echo e($house->_STYLE[$value->sale_style]); ?></span>
                                         <span class="sale-house-info-item text-danger"><?php echo e($value->sale_price); ?> tỷ</span>
                                     </div>
                                     <p class="card-text mt-2 text-dark"><?php echo e($value->sale_description); ?></p>
@@ -88,4 +94,6 @@
         </div>
     </main>
 <?php $__env->stopSection(); ?>
+
+
 <?php echo $__env->make('layouts.web', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\laravel8valuland\resources\views/web/sale/select.blade.php ENDPATH**/ ?>

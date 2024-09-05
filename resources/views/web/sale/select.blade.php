@@ -37,14 +37,14 @@
                         <label for="sale_direction" class="form-label-sm">Hướng</label>
                         <select class="form-control form-control-sm" id="sale_direction" name="sale_direction">
                             @if( !empty( $house->_DIRECTION ) )
-                            @foreach( $house->_DIRECTION as $value => $text )
-                                <option value="{{ $value }}" {{ $value == request()->sale_direction ? 'selected' : '' }}>{{ $text }}</option>
-                            @endforeach
+                                @foreach( $house->_DIRECTION as $value => $text )
+                                    <option value="{{ $value }}" {{ $value == request()->sale_direction ? 'selected' : '' }}>{{ $text }}</option>
+                                @endforeach
                             @endif
                         </select>
                         </div>
-                        <div class="col-12">
-                            <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                        <div class="col-md-2 search-group">
+                            <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                         </div>
                     </form>
                 </div>
@@ -60,13 +60,19 @@
                     @foreach( $sale_selects as $value )
                     <a class="sale-card d-block my-2" href="{{route('web.sale.detail', $value->sale_id)}}">
                         <div class="sale-card-grid">
-                            @foreach( $sale_imgs as $sale_img )
-                                @if( $sale_img->sale_id == $value->sale_id )
-                                    <div class="sale-grid-item sale-grid--item1">
-                                        <img class="sale-grid-img" src="{{asset($sale_img->sale_img_path)}}" alt="">
-                                    </div>
-                                @endif
-                            @endforeach
+                            <?php
+                                if( !empty( $sale_imgs($value->sale_id) ) ){
+                                    $imgs = $sale_imgs($value->sale_id);
+                                    dd( $imgs[0]->sale_img_path );
+                                }
+                            ?>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-4">
+                            </div>
                         </div>
                         <div class="product d-flex flex-column" style="gap: 30px;">
                             <div class="card rounded-0">
@@ -74,7 +80,7 @@
                                     <div class="d-flex sale-house-info">
                                         <span class="sale-house-info-item text-dark mr-3">{{ $value->sale_building}}.{{$value->sale_floor}}{{$value->code}}</span>
                                         <span class="sale-house-info-item text-danger mr-3">{{ $value->sale_navigable_area}}m<sup>2</sup></span>
-                                        <span class="sale-house-info-item text-dark mr-3">{{ $value->sale_style}}</span>
+                                        <span class="sale-house-info-item text-dark mr-3">{{ $house->_STYLE[$value->sale_style]}}</span>
                                         <span class="sale-house-info-item text-danger">{{ $value->sale_price }} tỷ</span>
                                     </div>
                                     <p class="card-text mt-2 text-dark">{{ $value->sale_description }}</p>
@@ -88,3 +94,4 @@
         </div>
     </main>
 @endsection
+

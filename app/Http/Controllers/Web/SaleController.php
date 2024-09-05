@@ -14,7 +14,7 @@ class SaleController extends Controller
     private $_sale;
     private $_house;
 
-    function __constructor(){
+    function __construct(){
         parent::__construct();
         $this->_sale = new SaleService();
         $this->_house = new HouseService();
@@ -47,7 +47,9 @@ class SaleController extends Controller
 
         $compact['sale_selects'] = $query->get();
         $compact['house'] = $this->_house;
-        $compact['sale_imgs'] = DB::table('sale_img')->get();
+        $compact['sale_imgs'] = function( $sale_id ){
+            return DB::table('sale_img')->where('sale_id', $sale_id)->take(4)->get();
+        };
 
         return view('web.sale.select', $compact);
     }
