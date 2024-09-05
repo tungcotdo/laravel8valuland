@@ -46,4 +46,19 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
+    public function login(Request $request){
+        $login = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+        if (Auth::attempt($login)) {
+            if( Auth::user()->user_group_id == 3 ){
+                return redirect()->route('web.sale.select')->with('success', 'Đăng nhập thành công!');
+            }else{
+                return redirect()->route('admin.dashboard.index')->with('success', 'Đăng nhập thành công!');
+            }
+        } 
+        return redirect()->back()->with('error', 'Đăng nhập thất bại!');
+    }
+
 }

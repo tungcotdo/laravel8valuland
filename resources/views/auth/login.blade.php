@@ -44,6 +44,19 @@
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Đăng nhập vào tài khoản</h5>
                     <p class="text-center small">Nhập tài khoản & mật khẩu để login</p>
+                    
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          {{ Session::get('error') }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @elseif (Session::has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          {{ Session::get('success') }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    
                   </div>
 
                   <form action="{{ route('login') }}" method="POST" class="row g-3 needs-validation" novalidate>
@@ -52,22 +65,12 @@
                       <label for="yourEmail" class="form-label-sm">Số điện thoại</label>
                       <div class="input-group has-validation">
                         <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                        @error('email')
-                            <div class="invalid-feedback" role="alert">
-                                {{ $message }}
-                            </div>
-                        @enderror
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label-sm">Mật khẩu</label>
                       <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                      @error('password')
-                        <div class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </div>
-                      @enderror
                     </div>
 
                     <div class="col-12">

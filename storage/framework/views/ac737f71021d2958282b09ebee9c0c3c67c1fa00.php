@@ -44,6 +44,21 @@
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Đăng nhập vào tài khoản</h5>
                     <p class="text-center small">Nhập tài khoản & mật khẩu để login</p>
+                    
+                    <?php if(Session::has('error')): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <?php echo e(Session::get('error')); ?>
+
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php elseif(Session::has('success')): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          <?php echo e(Session::get('success')); ?>
+
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif; ?>
+                    
                   </div>
 
                   <form action="<?php echo e(route('login')); ?>" method="POST" class="row g-3 needs-validation" novalidate>
@@ -59,19 +74,6 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="email" value="<?php echo e(old('email')); ?>" required autocomplete="email">
-                        <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <div class="invalid-feedback" role="alert">
-                                <?php echo e($message); ?>
-
-                            </div>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
                       </div>
                     </div>
 
@@ -85,18 +87,6 @@ $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>" name="password" required autocomplete="current-password">
-                      <?php $__errorArgs = ['password'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <div class="invalid-feedback" role="alert">
-                            <strong><?php echo e($message); ?></strong>
-                        </div>
-                      <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="col-12">
