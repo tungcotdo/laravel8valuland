@@ -9,7 +9,9 @@
           </ol>
         </nav>
       </div><!-- End Page Title -->
-  
+      <div class="card-btns">
+        <a href="<?php echo e(route('admin.rent.add')); ?>" class="btn btn-sm btn-primary"><i class="bi bi-plus-lg"></i> Thêm mới</a>
+      </div>
       <!-- Filter -->
       <div class="card">
         <div class="accordion-item p-3">
@@ -53,8 +55,8 @@
                     <?php endif; ?>
                   </select>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                <div class="col-md-2 search-group">
+                    <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                 </div>
             </form>
           </div>
@@ -74,7 +76,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-
+                    <p class="text-danger">Tổng số <b><?php echo e(count( $rent_selects )); ?></b> bản ghi.</p>
                     <table class="table table-bordered">
                       <thead>
                         <tr>
@@ -113,21 +115,7 @@
 
                 </div>
               </div><!-- End owner -->
-              <nav class="mt-3" aria-label="...">
-                <ul class="pagination pagination-sm">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Lùi</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">2</a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">Tiến</a>
-                  </li>
-                </ul>
-              </nav>
+              
             </div>
           </div><!-- End Left side columns -->
 

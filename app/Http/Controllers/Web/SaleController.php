@@ -21,7 +21,35 @@ class SaleController extends Controller
     }
 
     public function select(Request $request){
-        return view('web.sale.select');
+        $this->_authorization('web', 'sale', 'select');
+
+        $query = DB::table('sale')->where('sale_status', 2);
+
+        if( !empty( $request->sale_building ) ){
+            $query->where( 'sale_building', 'LIKE', '%'.$request->sale_building.'%' );
+        }
+
+        if( !empty( $request->sale_floor ) ){
+            $query->where( 'sale_floor', 'LIKE', '%'.$request->sale_floor.'%' );
+        }
+
+        if( !empty( $request->code ) ){
+            $query->where( 'code', 'LIKE', '%'.$request->code.'%' );
+        }
+
+        if( !empty( $request->sale_style ) ){
+            $query->where( 'sale_style', 'LIKE', '%'.$request->sale_style.'%' );
+        }
+
+        if( !empty( $request->sale_direction ) ){
+            $query->where( 'sale_direction', 'LIKE', '%'.$request->sale_direction.'%' );
+        }
+
+        $compact['sale_selects'] = $query->get();
+        $compact['house'] = $this->_house;
+        $compact['sale_imgs'] = DB::table('sale_img')->get();
+
+        return view('web.sale.select', $compact);
     }
 
     public function add(Request $request){

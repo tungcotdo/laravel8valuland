@@ -34,7 +34,7 @@ class SalevideoController extends Controller
     public function upload(Request $request){
         $this->_upload->one([
             'file' => $request->file('file'),
-            'uploadpath' => $this->_getuploadpath('sale', $request->sale_id),
+            'uploadpath' => $this->_getuploadpath('sale', $request->sale_id, true),
             'callback' => function( $path, $request ){
                 DB::table('sale')
                 ->where('sale_id', $request->sale_id)

@@ -10,40 +10,39 @@ use Carbon\Carbon;
 use Validator,Response,File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\URL;
+use App\Services\UploadService;
+
 
 class RentvideoController extends Controller
 {
+    private $_upload;
+
+    function __construct(){
+        parent::__construct();
+        $this->_upload = new UploadService();
+    }
+
+    function viewVideo( $rent_id ){
+        $rent = DB::table('rent')->where('rent_id', $rent_id)->first();
+        return view('admin.partials.rent_video', ['rent' =>  $rent])->render();
+    }
+
     public function render(Request $request){
-        $rent = DB::table('rent')->where('rent_id', $request->rent_id)->first();
-        $template = view('admin.partials.rent_video', ['rent' =>  $rent])->render();
-        return Response()->json(["success" => true, "template" => $template]);
+        return Response()->json(["success" => true, "template" => $this->viewVideo($request->rent_id)]);
     }
 
     public function upload(Request $request){
-        try{
-            $file = $request->file('file');
+        $this->_upload->one([
+            'file' => $request->file('file'),
+            'uploadpath' => $this->_getuploadpath('rent', $request->rent_id, true),
+            'callback' => function( $path, $request ){
+                DB::table('rent')
+                ->where('rent_id', $request->rent_id)
+                ->update(['rent_video_path' => $path]);
+            }          
+        ], $request);
 
-            $file_name = rand().'.'.$file->extension();
-                
-            $upload_path = 'upload'. '/'. 'rent' . '/' . $request->rent_id  . '/' . 'video' . '/';
-            
-            $file->move($upload_path, $file_name);
-
-            $rent_video_path = $upload_path . $file_name;
-            
-            DB::table('rent')
-            ->where('rent_id', $request->rent_id)
-            ->update([
-                'rent_video_path' => $rent_video_path
-            ]);
-
-            $rent = DB::table('rent')->where('rent_id', $request->rent_id)->first();
-            $template = view('admin.partials.rent_video', ['rent' =>  $rent])->render();
-            return Response()->json(["success" => true, "template" => $template]);
-        }
-        catch(Exception $e){
-            return Redirect::to(URL::previous() . "#rent-img")->with('success', 'Có lỗi xảy ra!');
-        }
+        return Response()->json(["success" => true, "template" => $this->viewVideo($request->rent_id)]);
     }
 
     public function delete(Request $request){
@@ -51,10 +50,8 @@ class RentvideoController extends Controller
         File::delete($rent->rent_video_path);
         DB::table('rent')
         ->where('rent_id', $request->rent_id)
-        ->update([
-            'rent_video_path' => ''
-        ]);
-        $template = view('admin.partials.rent_video', ['rent' => null])->render();
-        return Response()->json(["success" => true, "template" => $template]);
+        ->update(['rent_video_path' => NULL]);
+        
+        return Response()->json(["success" => true, "template" => $this->viewVideo($request->rent_id)]);
     }
 }

@@ -5,12 +5,14 @@ namespace App\Services;
 class HouseService
 {
     public $_SUBDIVISION = [
+        '0' => '-- Chọn --',
         '1' => 'Park 1',
         '2' => 'Park 2',
         '3' => 'Park 3'
     ];
 
     public $_ROOM = [
+        '0' => '-- Chọn --',
         '1' => '1',
         '2' => '2',
         '3' => '3',
@@ -20,6 +22,7 @@ class HouseService
     ];
 
     public $_STYLE = [
+        '0' => '-- Chọn --',
         "1" => "CC Studio",
         "2" => "CC 1PN",
         "3" => "CC 1PN+",
@@ -32,6 +35,7 @@ class HouseService
     ];
 
     public $_DIRECTION = [
+        '0' => '-- Chọn --',
         '1' =>	'Bắc',
         '2' =>	'Nam',
         '3' =>	'Đông',

@@ -49,10 +49,9 @@
                   <form action="<?php echo e(route('login')); ?>" method="POST" class="row g-3 needs-validation" novalidate>
                     <?php echo csrf_field(); ?>
                     <div class="col-12">
-                      <label for="yourEmail" class="form-label-sm">Email</label>
+                      <label for="yourEmail" class="form-label-sm">Số điện thoại</label>
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input id="email" type="email" class="form-control <?php $__errorArgs = ['email'];
+                        <input id="email" type="text" class="form-control <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }

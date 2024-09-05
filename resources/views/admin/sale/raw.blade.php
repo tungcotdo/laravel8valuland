@@ -9,7 +9,9 @@
           </ol>
         </nav>
       </div><!-- End Page Title -->
-
+      <div class="card-btns">
+        <a href="{{route('admin.owner.add')}}" class="btn btn-sm btn-primary"><i class="bi bi-plus-lg"></i> Thêm mới</a>
+      </div>
       <section class="section mt-3">
         <div class="row">
 

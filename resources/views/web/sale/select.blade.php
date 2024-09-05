@@ -9,30 +9,42 @@
                         <h5>Bất động sản Vinhome Ocean Park</h5>
                         <small>Hiện có <b>3</b> bất động sản.</small>
                     </div>
-                    <form class="row g-3" action="{{route('admin.owner.index')}}">
-                        <div class="col-4 col-md-2">
-                            <label for="sale_building" class="form-label-sm label-filter">Tòa</label>
-                            <input type="text" class="form-control form-control-sm" id="sale_building" name="sale_building">
+                    <form class="row g-3" action="{{route('web.sale.select')}}">
+                        <div class="col-md-2">
+                        <label for="sale_building" class="form-label-sm">Tòa</label>
+                        <input type="text" class="form-control form-control-sm" id="sale_building" name="sale_building" value="{{request()->sale_building}}">
                         </div>
-                        <div class="col-4 col-md-2">
-                            <label for="sale_floor" class="form-label-sm label-filter">Tầng</label>
-                            <input type="text" class="form-control form-control-sm" id="sale_floor" name="sale_floor">
+                        <div class="col-md-2">
+                        <label for="sale_floor" class="form-label-sm">Tầng</label>
+                        <input type="text" class="form-control form-control-sm" id="sale_floor" name="sale_floor" value="{{request()->sale_floor}}">
                         </div>
-                        <div class="col-4 col-md-2 validate">
-                            <label for="code" class="form-label-sm label-filter">Căn</label>
-                            <input type="text" class="form-control form-control-sm" id="code" name="code">
-                            <small class="error-message text-danger"></small>
+                        <div class="col-md-2 validate">
+                        <label for="code" class="form-label-sm">Căn</label>
+                        <input type="text" class="form-control form-control-sm" id="code" name="code" value="{{request()->code}}">
+                        <small class="error-message text-danger"></small>
                         </div>
-                        <div class="col-4 col-md-2">
-                            <label for="sale_navigable_area" class="form-label-sm label-filter">Loại căn hộ</label>
-                            <input type="text" class="form-control form-control-sm" id="sale_navigable_area" name="sale_navigable_area">
+                        <div class="col-md-2">
+                        <label for="sale_style" class="form-label-sm">Loại căn hộ</label>
+                        <select class="form-control form-control-sm" id="sale_style" name="sale_style">
+                            @if( !empty( $house->_STYLE ) )
+                            @foreach( $house->_STYLE as $value => $text )
+                                <option value="{{ $value }}" {{ $value == request()->sale_style ? 'selected' : '' }}>{{ $text }}</option>
+                            @endforeach
+                            @endif
+                        </select>
                         </div>
-                        <div class="col-4 col-md-2">
-                            <label for="sale_navigable_area" class="form-label-sm label-filter">Hướng</label>
-                            <input type="text" class="form-control form-control-sm" id="sale_navigable_area" name="sale_navigable_area">
+                        <div class="col-md-2">
+                        <label for="sale_direction" class="form-label-sm">Hướng</label>
+                        <select class="form-control form-control-sm" id="sale_direction" name="sale_direction">
+                            @if( !empty( $house->_DIRECTION ) )
+                            @foreach( $house->_DIRECTION as $value => $text )
+                                <option value="{{ $value }}" {{ $value == request()->sale_direction ? 'selected' : '' }}>{{ $text }}</option>
+                            @endforeach
+                            @endif
+                        </select>
                         </div>
-                        <div class="col-4 col-md-2 search-group">
-                            <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
+                        <div class="col-12">
+                            <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
                         </div>
                     </form>
                 </div>
@@ -44,96 +56,34 @@
     <main class="sale-list container">
         <div class="row">
             <div class="col-md-12">
-                <a class="sale-card d-block my-2" href="{{route('web.sale.detail', 1)}}">
-                    <div class="sale-card-grid">
-                        <div class="sale-grid-item sale-grid--item1">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/1.jpg')}}" alt="">
+                @if( !empty( $sale_selects ) )
+                    @foreach( $sale_selects as $value )
+                    <a class="sale-card d-block my-2" href="{{route('web.sale.detail', $value->sale_id)}}">
+                        <div class="sale-card-grid">
+                            @foreach( $sale_imgs as $sale_img )
+                                @if( $sale_img->sale_id == $value->sale_id )
+                                    <div class="sale-grid-item sale-grid--item1">
+                                        <img class="sale-grid-img" src="{{asset($sale_img->sale_img_path)}}" alt="">
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
-                        <div class="sale-grid-item sale-grid--item2">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/2.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item3">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/3.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item4">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/4.jpg')}}" alt="">
-                        </div>
-                    </div>
-                    <div class="product d-flex flex-column" style="gap: 30px;">
-                        <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex sale-house-info">
-                                <span class="sale-house-info-item text-dark mr-3">S102.xx</span>
-                                <span class="sale-house-info-item text-danger mr-3">63m<sup>2</sup></span>
-                                <span class="sale-house-info-item text-dark mr-3">2N1WC</span>
-                                <span class="sale-house-info-item text-danger">4.5 tỷ</span>
+                        <div class="product d-flex flex-column" style="gap: 30px;">
+                            <div class="card rounded-0">
+                                <div class="card-body">
+                                    <div class="d-flex sale-house-info">
+                                        <span class="sale-house-info-item text-dark mr-3">{{ $value->sale_building}}.{{$value->sale_floor}}{{$value->code}}</span>
+                                        <span class="sale-house-info-item text-danger mr-3">{{ $value->sale_navigable_area}}m<sup>2</sup></span>
+                                        <span class="sale-house-info-item text-dark mr-3">{{ $value->sale_style}}</span>
+                                        <span class="sale-house-info-item text-danger">{{ $value->sale_price }} tỷ</span>
+                                    </div>
+                                    <p class="card-text mt-2 text-dark">{{ $value->sale_description }}</p>
+                                </div>
                             </div>
-                            <p class="card-text mt-2 text-dark">Bàn giao Full nội thất liền tường cao cấp nhập khẩu, kính Low - E 3 lớp, cửa chống cháy,...
-                            Sử dụng tiện ích chung của Vin Ocean Park nhưng có thêm những đặc quyền dành riêng cho cư dân Mas như</p>
                         </div>
-                        </div>
-                    </div>
-                </a>
-                <a class="sale-card d-block my-2" href="{{route('web.sale.detail', 1)}}">
-                    <div class="sale-card-grid">
-                        <div class="sale-grid-item sale-grid--item1">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/1.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item2">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/2.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item3">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/3.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item4">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/4.jpg')}}" alt="">
-                        </div>
-                    </div>
-                    <div class="product d-flex flex-column" style="gap: 30px;">
-                        <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex sale-house-info">
-                                <span class="sale-house-info-item text-dark mr-3">S102.xx</span>
-                                <span class="sale-house-info-item text-danger mr-3">63m<sup>2</sup></span>
-                                <span class="sale-house-info-item text-dark mr-3">2N1WC</span>
-                                <span class="sale-house-info-item text-danger">4.5 tỷ</span>
-                            </div>
-                            <p class="card-text mt-2 text-dark">Bàn giao Full nội thất liền tường cao cấp nhập khẩu, kính Low - E 3 lớp, cửa chống cháy,...
-                            Sử dụng tiện ích chung của Vin Ocean Park nhưng có thêm những đặc quyền dành riêng cho cư dân Mas như</p>
-                        </div>
-                        </div>
-                    </div>
-                </a>
-                <a class="sale-card d-block my-2" href="{{route('web.sale.detail', 1)}}">
-                    <div class="sale-card-grid">
-                        <div class="sale-grid-item sale-grid--item1">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/1.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item2">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/2.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item3">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/3.jpg')}}" alt="">
-                        </div>
-                        <div class="sale-grid-item sale-grid--item4">
-                            <img class="sale-grid-img" src="{{asset('upload/sale/4.jpg')}}" alt="">
-                        </div>
-                    </div>
-                    <div class="product d-flex flex-column" style="gap: 30px;">
-                        <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex sale-house-info">
-                                <span class="sale-house-info-item text-dark mr-3">S102.xx</span>
-                                <span class="sale-house-info-item text-danger mr-3">63m<sup>2</sup></span>
-                                <span class="sale-house-info-item text-dark mr-3">2N1WC</span>
-                                <span class="sale-house-info-item text-danger">4.5 tỷ</span>
-                            </div>
-                            <p class="card-text mt-2 text-dark">Bàn giao Full nội thất liền tường cao cấp nhập khẩu, kính Low - E 3 lớp, cửa chống cháy,...
-                            Sử dụng tiện ích chung của Vin Ocean Park nhưng có thêm những đặc quyền dành riêng cho cư dân Mas như</p>
-                        </div>
-                        </div>
-                    </div>
-                </a>
+                    </a>
+                    @endforeach
+                @endif
             </div>
         </div>
     </main>

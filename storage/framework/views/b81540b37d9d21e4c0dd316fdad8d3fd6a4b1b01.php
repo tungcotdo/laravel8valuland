@@ -89,25 +89,26 @@
                         <label for="rent_price" class="form-label-sm">Giá thuê</label>
                         <input type="text" class="form-control form-control-sm" id="rent_price" name="rent_price" value="<?php echo e($rent->rent_price); ?>">
                       </div>
+
                       <div class="col-md-4 validate">
                         <label for="owner_name" class="form-label-sm">Tên chủ hộ <small class="text-danger"> *</small></label>
                         <input type="text" class="form-control form-control-sm" id="owner_name" name="owner_name" value="<?php echo e($rent->owner_name); ?>">
                         <small class="error-message text-danger"></small>
-                      </div>
-                      <div class="col-md-4">
-                        <label for="rent_start_date" class="form-label-sm">Ngày bắt đầu</label>
-                        <input type="text" class="form-control form-control-sm" id="rent_start_date" name="rent_start_date" value="<?php echo e($rent->rent_start_date); ?>">
-                      </div>
-                      <div class="col-md-4">
-                        <label for="rent_end_date" class="form-label-sm">Ngày kết thúc</label>
-                        <input type="text" class="form-control form-control-sm" id="rent_end_date" name="rent_end_date" value="<?php echo e($rent->rent_end_date); ?>">
                       </div>
                       <div class="col-md-4 validate">
                         <label for="owner_phone" class="form-label-sm">Điện thoại chủ hộ <small class="text-danger"> *</small></label>
                         <input type="text" class="form-control form-control-sm" id="owner_phone" name="owner_phone" value="<?php echo e($rent->owner_phone); ?>">
                         <small class="error-message text-danger"></small>
                       </div>
-                      <div class="col-md-8">
+                      <div class="col-md-4">
+                        <label for="rent_start_date" class="form-label-sm">Ngày bắt đầu thuê</label>
+                        <input type="date" class="form-control form-control-sm" id="rent_start_date" name="rent_start_date" value="<?php echo e($rent->rent_start_date); ?>">
+                      </div>
+                      <div class="col-md-4">
+                        <label for="rent_end_date" class="form-label-sm">Ngày kết thúc thuê</label>
+                        <input type="date" class="form-control form-control-sm" id="rent_end_date" name="rent_end_date" value="<?php echo e($rent->rent_end_date); ?>">
+                      </div>
+                      <div class="col-md-12">
                         <label for="rent_description" class="form-label-sm">Mô tả</label>
                         <textarea class="form-control form-control-sm" name="rent_description" id="rent_description"><?php echo e($rent->rent_description); ?></textarea>
                       </div>
@@ -153,8 +154,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-img-modal-close"></button>
           </div>
           <div class="modal-body">
-            <form action="<?php echo e(route('admin.rentimg.upload', $rent->rent_id)); ?>" id="admin-rent-uploadimg" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="rent-loadimg-url" value="<?php echo e(route('admin.rentimg.render', $rent->rent_id)); ?>">
+            <form action="<?php echo e(route('shared.rentimg.upload', $rent->rent_id)); ?>" id="admin-rent-uploadimg" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="rent-loadimg-url" value="<?php echo e(route('shared.rentimg.render', $rent->rent_id)); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-auto validate">
@@ -180,8 +181,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-video-modal-close"></button>
           </div>
           <div class="modal-body">
-            <form action="<?php echo e(route('admin.rentvideo.upload', $rent->rent_id)); ?>" id="admin-rentvideo-upload" method="POST" enctype="multipart/form-data">
-                <input type="hidden" id="admin-rentvideo-upload-url" value="<?php echo e(route('admin.rentvideo.render', $rent->rent_id)); ?>">
+            <form action="<?php echo e(route('shared.rentvideo.upload', $rent->rent_id)); ?>" id="admin-rentvideo-upload" method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="admin-rentvideo-upload-url" value="<?php echo e(route('shared.rentvideo.render', $rent->rent_id)); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-auto validate">

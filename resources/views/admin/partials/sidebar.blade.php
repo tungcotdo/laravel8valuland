@@ -107,24 +107,26 @@
             </a>
           </li>
         @endif
-
+        
         @if( $_authorization('admin', 'rent', 'transaction', true) )
           <li>
-            <a href="{{route('admin.rentran.index')}}">
+            <a href="{{route('admin.renttran.index')}}">
               <i class="bi bi-circle"></i><span>Danh sách giao dịch</span>
             </a>
           </li>
         @endif
 
         @if( $_authorization('admin', 'rent', 'sold', true) )
-        <li>
-          <a href="{{route('admin.rent.sold')}}">
-            <i class="bi bi-circle"></i><span>Danh sách đã bán</span>
-          </a>
-        </li>
+          <li>
+            <a href="{{route('admin.rent.sold')}}">
+              <i class="bi bi-circle"></i><span>Danh sách đã thuê</span>
+            </a>
+          </li>
         @endif
     </ul>
-  </li><!-- End Rent nav -->
+  </li><!-- End rent nav -->
+
+
 
   <!-- Notification nav -->
   <li class="nav-item">
@@ -144,6 +146,11 @@
         <li>
           <a href="{{route('admin.notification.add')}}">
             <i class="bi bi-circle"></i><span>Thêm mới</span>
+          </a>
+        </li>
+        <li >
+          <a href="{{route('admin.notification.term')}}">
+            <i class="bi bi-circle"></i><span>Hết hạn thuê</span>
           </a>
         </li>
       @endif
@@ -224,6 +231,10 @@
 
     </ul>
   </li><!-- End Authorized nav -->
+
+
+
+
 </ul>
 
 </aside>

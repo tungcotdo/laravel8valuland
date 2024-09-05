@@ -25,22 +25,22 @@
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse show mt-3" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="">
             <form class="row g-3">
-            <div class="col-md-4">
+            <div class="col-md-3">
             <label for="user_name" class="form-label small">Tên</label>
             <input type="text" class="form-control form-control-sm" id="user_name" name="user_name">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
             <label for="user_email" class="form-label small">Email</label>
             <input type="email" class="form-control form-control-sm" id="user_email" name="user_email">
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
             <label for="user_phone" class="form-label small">Điện thoại</label>
             <input type="text" class="form-control form-control-sm" id="user_phone" name="user_phone">
             </div>
 
-              <div class="col-12">
-                <button class="btn btn-sm btn-secondary" type="submit">Áp dụng</button>
-              </div>
+            <div class="col-md-2 search-group">
+                <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
+            </div>
             </form>
           </div>
         </div>

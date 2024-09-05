@@ -55,8 +55,8 @@
                     @endif
                   </select>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-sm btn-secondary" type="submit">Áp dụng lọc</button>
+                <div class="col-md-2 search-group">
+                    <button class="btn btn-sm btn-secondary search-group-btn" type="submit">Áp dụng lọc</button>
                 </div>
             </form>
           </div>

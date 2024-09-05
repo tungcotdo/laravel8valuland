@@ -65,6 +65,13 @@ class NotificationController extends Controller
         return redirect()->back()->with('error', 'Có lỗi xảy ra!');
     }
 
+    public function term(Request $request){
+        $this->_authorization('admin', 'notification', 'add');
+        $compact['setting'] = DB::table('setting')->where('key', 'rent_deadline_date')->first();
+
+        return view('admin.notification.term', $compact);
+    }
+
     public function add(Request $request){
         $this->_authorization('admin', 'notification', 'add');
         $compact['user_groups'] = DB::table('user_group')->get();
